@@ -5,47 +5,53 @@
             <h3>ViMk ERP</h3>
         </div>
         <ul class="list-unstyled components">
-            <form>
-                <div class="search-box">
+            <form id="body">
+                <!-- <div class="search-box">
                     <input type="text" class="search-input" placeholder="Procurar...">
                     <button class="search-button">
                         <i class="fas fa-search"></i>
                     </button>
+                </div> -->
+                <div class="box">
+                    <form name="search">
+                        <input type="text" class="input" name="txt" onmouseout="this.value = '';this.blur();">
+                    </form>
+                    <i id="search" class="fas fa-search"></i>
                 </div>
             </form>
-            <li class="module">
+            <li id="module" @click="goToHome()">
                 <i class="fas fa-house-user pr-2 pt-1"></i>
                 Inicio
             </li>
-            <li class="module" @click="goToCad">
+            <li id="module" @click="goToCad()">
                 <i class="fas fa-book pr-2 pt-1"></i>
                 Cadastros
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-cart-shopping pr-2 pt-1"></i>
                 Vendas
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-box-open pr-2 pt-1"></i>
                 Compras
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-boxes-stacked pr-2 pt-1"></i>
                 Estoque
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-chart-line pr-2 pt-1"></i>
                 Relatórios
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-gears pr-2 pt-1"></i>
                 Configurações
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-info-circle pr-2 pt-1"></i>
                 Sobre
             </li>
-            <li class="module">
+            <li id="module">
                 <i class="fas fa-power-off pr-2 pt-1"></i>
                 Sair
             </li>
@@ -68,10 +74,16 @@ export default {
         goToCad(){
             this.$router.push(
                 '/cadastros'
-            )
+            ).catch(()=>{})
             console.log('funfou')
+        },
+        goToHome(){
+            this.$router.push(
+                '/home'
+            ).catch(()=>{})
         }
-    }
+        
+    },
 }
 </script>
 
@@ -79,6 +91,7 @@ export default {
 
     .sidebar {
         background-color: #7386d5;
+        /* box-shadow: inset -10px 0 5px -8px hsla(0,0%,0%,.25);      */
     }
 
     #sidebar {
@@ -86,7 +99,8 @@ export default {
         max-width: 250px;
         background: #7386d5;
         color: #fff;
-        transition: all .3s
+        transition: all .3s;
+        /* box-shadow: inset -10px 0 5px -8px hsla(0,0%,0%,.25); */
     }
 
     #sidebar.active {
@@ -95,7 +109,8 @@ export default {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #6d7fcc
+        background: #6d7fcc;
+        /* box-shadow: inset -10px 0 5px -8px hsla(0,0%,0%,.25); */
     }
 
     #sidebar ul.components {
@@ -116,7 +131,7 @@ export default {
 
     #sidebar ul li a:hover {
         color: #7386d5;
-        background: #fff
+        background: #fff;
     }
 
     #sidebar ul li.active>a,a[aria-expanded="true"]{
@@ -124,89 +139,91 @@ export default {
         background: #6d7fcc
     }
 
-    .search-box {
+    #body {
+        margin: 0;
+        padding-top: 10px;
+        padding-bottom: 0;
+        /* padding: 0; */
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+        align-content: center;
+    }
+
+    .box {
         position: relative;
     }
 
-    .search-input {
-        /* outline: none;
-        border: none;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        line-height: 30px;
-        padding-left: 20px;
-        width: 0%;
-        transition: .3s ease-out; */
-        height: 30px;
-        width: 50px;
-        border: none;
+    .input {
         padding: 10px;
-        font-size: 18px;
-        letter-spacing: 2px;
+        width: 30px;
+        height: 30px;
+        background: none;
+        /* border: 2px solid #fff; */
+        border: none;;
+        border-radius: 50px;
+        box-sizing: border-box;
+        font-size: 15px;
+        color: #6d7fcc;
         outline: none;
-        border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
-        transition: all .5s ease-in-out;
-        background-color: #7386d5;
-        padding-right: 40px;
-        /* display: none; */
-        color:#fff;
+        transition: .5s;
     }
 
-    .search-input::placeholder {
+    .box:hover input {
+        width: 235px;
+        background: #eaeeff;
+        border: 2px solid #eaeeff;
+        color: #6d7fcc;
+        border-radius: 10px;
+    }
+    
+
+    .box #search {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translate(50%, -100%);
+        font-size: 20px;
         color: #fff;
-        font-size: 1rem;
-        letter-spacing: 2px;
-        font-weight: 100;
+        transition: .4s;
     }
 
-    .search-input:hover {
-        padding-left: 10px;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        width: 80%;
-        opacity: 100;
+    .box:hover #search {
+        color: #7386d5;
+        font-size: 15px;
+        transform: translate(50%, -120%);
     }
 
-    .search-button {
-        outline: none;
-        border: none;
-        padding-left: -50px;
-        line-height: 30px;
-        background-color: #7386d5;
-        color: #fff;
-        cursor: pointer;
-        pointer-events: painted;
-    }
-
-
-    .module {
+    #module {
         display: flex;
         padding-top: 10px;
         padding-bottom: 10px;
         padding-left: 20px;
-        transition: all .3s ease-out;
+        transition: all .4s ease-out;
+        /* background-image: linear-gradient(#7386d5,#eaeeff);
+        background-size: 100% 0%;
+        background-repeat: no-repeat; */
+        background-image: linear-gradient(#eaeeff,#eaeeff);
+        background-size: 0 100%;
+        background-repeat: no-repeat;
+        transition: .4s;
 
     }
 
-    li .module {
+    li #module {
         align-items: flex-start;
     }
 
-    .module:hover,
-    .module:focus {
-        background: #eaeeff;
+    #module:hover {
+        background-size: 100% 100%;
         cursor: pointer;   
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         transition: .3s;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px;
-        /* transform: translateY(-0.25em); */
+        /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px; */
         margin-left: 10px;
         color: #6d7fcc;
-
     }
 
 

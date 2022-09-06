@@ -6,7 +6,7 @@
         <div class="select-info">
             <span class="select-title">{{title}}</span>
             <span class="select-value">{{value}}</span>
-        </div>
+        </div> 
     </div>
 </template>
 
@@ -26,20 +26,21 @@ export default {
     .select-erp {
         flex: 1;
         display: flex;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-right: 2px;
         margin-bottom: 20px;
         background-color: rgb(146, 179, 228);
         padding: 20px;
         border: 1px solider rgba(0, 0, 0, 0.2);
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 1.2);
+        /* box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, .5); */
         transition: .3s;
     }
 
     .select-erp:hover {
         background-color: rgb(123, 148, 185);
         color: #fff;
-        box-shadow: 0 1px 5px rgba(0, 0, 0, 1.2);
+        /* box-shadow: 0 1px 5px rgba(0, 0, 0, 1.2); */
+        /* box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, .5); */
         transition: .2s
     }
 

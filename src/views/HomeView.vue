@@ -35,9 +35,16 @@ export default {
             (document).ready(function () {
             ('#sidebarCollapse').on('click', function () {
                 ('#sidebar').toggleClass('active');
+                })
             })
         })
-        })
+        // (function(){
+        //     (document).ready(function () {
+        //         ('#module').on('click', function () {
+        //             ('#module').toggleClass('focus')
+        //         })
+        //     })
+        // })
     },
     methods: {
         toggleMenu(){
@@ -70,9 +77,12 @@ export default {
         padding: 15px 10px;
         background: #6d7fcc;
         border: none;
-        border-radius: 10px;
+        border-radius: 5px;
         margin-bottom: 40px;
-        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
+        /* box-shadow: 0 1px 5px rgba(0, 0, 0, 1.2); */
+        /* -webkit-box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.2); 
+        box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.2); */
     }
 
     #row-itens {
@@ -82,7 +92,7 @@ export default {
     }
 
     #row-itens button {
-        border-radius: 20px;
+        border-radius: 5px;
         color: #fff;
         border: none;
         background: #6d7fcc;
@@ -90,10 +100,11 @@ export default {
     }
 
     #row-itens button:hover {
-        background: #99a4d4;
+        background: #eaeeff;
+        color: #6d7fcc;
         transition: 0.2s;
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        transform: translateY(-0.25em);
+        /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+        /* transform: translateY(-0.25em); */
     }
 
     #row-itens h3 {

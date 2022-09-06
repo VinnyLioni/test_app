@@ -22,5 +22,9 @@ export default {
 </script>
 
 <style>
-
+    .selects {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
 </style>
