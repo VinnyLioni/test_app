@@ -1,5 +1,5 @@
 <template>
-  <header class="header-box">
+  <header class="content">
         <nav class="header-box">
             <div id="row-itens">
                 <div class="main-menu">
@@ -17,8 +17,20 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-    name: 'HeaderVue'
+    name: 'HeaderVue',
+    computed: mapState(['isMenuVisible']),
+    methods: {
+        openModal(){
+            this.$refs['my-modal'].toggle('#toggle-btn')
+        }
+    },
+    mounted(){
+
+    }
+    
 }
 </script>
 

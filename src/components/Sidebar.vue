@@ -14,7 +14,8 @@
                 </div> -->
                 <div class="box">
                     <form name="search">
-                        <input type="text" class="input" name="txt" onmouseout="this.value = '';this.blur();">
+                        <input type="text" 
+                        data-toggle="tooltip" data-placement="top" class="input" name="txt">
                     </form>
                     <i id="search" class="fas fa-search"></i>
                 </div>
@@ -84,6 +85,8 @@ export default {
         }
         
     },
+    mounted(){
+    }
 }
 </script>
 
@@ -168,6 +171,7 @@ export default {
         color: #6d7fcc;
         outline: none;
         transition: .5s;
+        text-decoration: none;
     }
 
     .box:hover input {

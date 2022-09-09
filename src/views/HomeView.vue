@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <SidebarVue />
+    <!-- <HeaderVue /> -->
     <div id="content">
         <nav class="header-box">
             <div id="row-itens">
@@ -13,6 +14,13 @@
                 <h3>
                     ViMk ERP
                 </h3>
+                <div id="right-side-itens">
+                    <button id="notifyButton"
+                    class="p-2 mr-4">
+                        <i class="fas fa-bell">
+                        </i> Notificações
+                    </button>
+                </div>
             </div>
         </nav>
         <div id="content-view">
@@ -38,17 +46,16 @@ export default {
                 })
             })
         })
-        // (function(){
-        //     (document).ready(function () {
-        //         ('#module').on('click', function () {
-        //             ('#module').toggleClass('focus')
-        //         })
-        //     })
-        // })
     },
     methods: {
         toggleMenu(){
             this.$store.commit('toggleMenu')
+        },
+                showModal(){
+            this.$refs['my-modal'].show()
+        },
+        hideModal(){
+            this.$refs['my-modal'].hide()
         }
     }
 }
@@ -86,20 +93,26 @@ export default {
     }
 
     #row-itens {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
         padding-top: 2px;
+        /* padding-right: 10px; */
+        /* display: flex;
+        padding-top: 2px; */
     }
 
-    #row-itens button {
+    #row-itens #sideBarCollapse {
+        align-items: flex-start;
         border-radius: 5px;
+        padding-left: 20px;
         color: #fff;
         border: none;
         background: #6d7fcc;
         transition: 0.2s
     }
 
-    #row-itens button:hover {
+    #row-itens #sideBarCollapse:hover {
         background: #eaeeff;
         color: #6d7fcc;
         transition: 0.2s;
@@ -108,10 +121,28 @@ export default {
     }
 
     #row-itens h3 {
+        align-items: center;
+        padding-right: 15px;
         color: #fff;
         font-size: 200%;
     }
 
+    #row-itens #notifyButton {
+        /* padding-top: 10px; */
+        align-items: flex-end;
+        border-radius: 5px;
+        color: #fff;
+        border: none;
+        background: #6d7fcc;
+        transition: 0.2s;
+        /* font-size: 80%; */
+    }
+
+    #row-itens #notifyButton:hover {
+        background: #eaeeff;
+        color: #6d7fcc;
+        transition: .2s;
+    }
 
     
     .navbar-btn {
@@ -141,6 +172,7 @@ export default {
 
     #content {
         display: flex;
+        /* justify-content: center; */
         flex-direction: column;
         width: 100%;
         padding: 20px;
@@ -171,5 +203,10 @@ export default {
         #content h3 {
             display: none;
         }
+
+    #__BVID__14___BV_modal_content_ {
+        background-color: #eaeeff;
+    }
+
     }
 </style>
