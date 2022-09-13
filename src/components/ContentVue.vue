@@ -2,6 +2,7 @@
   <div class="content-vue">
     <div class="selects">
         <selection-erp style="cursor: pointer" title="Cadastro de Itens"/>
+        <selection-erp style="cursor: pointer" title="Teste modal" @getGoTo="goToModal()"/>
     </div>
   </div>
 </template>
@@ -17,6 +18,11 @@ export default {
                 '/itens'
             )
         },
+        goToModal(){
+            this.$router.push(
+                '/modal'
+            )
+        }
     }
 }
 </script>
