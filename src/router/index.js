@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 // import HomeView from "../views/HomeView.vue";
 import ContentVue from "../components/ContentVue";
 import MainContentVue from "../components/MainContent";
-import ModalVue from "../components/ModalVue";
 
 Vue.use(VueRouter);
 
@@ -26,11 +25,6 @@ const routes = [
     path: "/cadastros",
     name: "cadastros",
     component: ContentVue,
-  },
-  {
-    path: "/modal",
-    name: "modal",
-    component: ModalVue,
   },
 ];
 

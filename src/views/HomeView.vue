@@ -16,7 +16,7 @@
                 </h3>
                 <div id="right-side-itens">
                     <button id="notifyButton"
-                    class="p-2 mr-4">
+                    class="p-2 mr-4" @click="showModal">
                         <i class="fas fa-bell">
                         </i> Notificações
                     </button>
@@ -25,6 +25,9 @@
         </nav>
         <div id="content-view">
             <router-view/>
+            <ModalVue v-if="isModalVisible" @close="closeModal">
+
+            </ModalVue>
         </div>
     </div>
   </div>
@@ -33,11 +36,17 @@
 <script>
 import { mapState } from 'vuex'
 import SidebarVue from '../components/Sidebar.vue'
+import ModalVue from '../components/ModalVue.vue'
 
 export default {
     name: 'HomeView',
     computed: mapState(['isMenuVisible']),
-    components: { SidebarVue },
+    components: { SidebarVue, ModalVue },
+    data(){
+        return {
+            isModalVisible: false
+        }
+    },
     mounted(){
         (function(){
             (document).ready(function () {
@@ -51,11 +60,11 @@ export default {
         toggleMenu(){
             this.$store.commit('toggleMenu')
         },
-                showModal(){
-            this.$refs['my-modal'].show()
+        showModal(){
+            this.isModalVisible = true
         },
-        hideModal(){
-            this.$refs['my-modal'].hide()
+        closeModal(){
+            this.isModalVisible = false
         }
     }
 }
