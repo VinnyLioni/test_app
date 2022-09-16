@@ -26,7 +26,15 @@
         <div id="content-view">
             <router-view/>
             <ModalVue v-if="isModalVisible" @close="closeModal">
-
+                <template v-slot:header>
+                    teste do header dentro do template
+                </template>
+                <template v-slot:body>
+                    teste da section dentro do template
+                </template>
+                <template v-slot:footer>
+                    teste do rodapé no template
+                </template>
             </ModalVue>
         </div>
     </div>
@@ -213,9 +221,9 @@ export default {
             display: none;
         }
 
-    #__BVID__14___BV_modal_content_ {
+    /* #__BVID__14___BV_modal_content_ {
         background-color: #eaeeff;
-    }
+    } */
 
     }
 </style>

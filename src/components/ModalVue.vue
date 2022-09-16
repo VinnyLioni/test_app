@@ -1,6 +1,7 @@
 <template>
+  <transition name="modal-fade">
   <div class="modal-backdrop">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
       <header class="modal-heade">
         <slot name="header">
           Esse é um título padrão
@@ -20,6 +21,7 @@
       </footer>
     </div>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -96,5 +98,16 @@ export default {
     background: #4aae9b;
     border: 1px solid #4aae9b;
     border-radius: 2px;
+  }
+
+  .modal-fade-enter,
+  .modal-fade-leave-to {
+    opacity: 0;
+
+  }
+
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity .3s ease;
   }
 </style>
