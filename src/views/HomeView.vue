@@ -15,7 +15,7 @@
                     ViMk ERP
                 </h3>
                 <div id="right-side-itens">
-                    <button id="notifyButton"
+                    <button id="notifyButton" @click="toggleModal"
                     class="p-2 mr-4">
                         <i class="fas fa-bell">
                         </i> Notificações
@@ -26,6 +26,7 @@
         <div id="content-view">
             <router-view/>
         </div>
+        <ModalVue />
     </div>
   </div>
 </template>
@@ -33,11 +34,12 @@
 <script>
 import { mapState } from 'vuex'
 import SidebarVue from '../components/Sidebar.vue'
+import ModalVue from '../components/ModalVue.vue'
 
 export default {
     name: 'HomeView',
-    computed: mapState(['isMenuVisible']),
-    components: { SidebarVue },
+    computed: mapState(['isMenuVisible','IsModalVisible']),
+    components: { SidebarVue, ModalVue },
     mounted(){
         (function(){
             (document).ready(function () {
@@ -51,11 +53,8 @@ export default {
         toggleMenu(){
             this.$store.commit('toggleMenu')
         },
-                showModal(){
-            this.$refs['my-modal'].show()
-        },
-        hideModal(){
-            this.$refs['my-modal'].hide()
+        seeModal(){
+            this.$store.commit('toggleModal')
         }
     }
 }
