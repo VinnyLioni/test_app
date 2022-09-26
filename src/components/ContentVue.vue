@@ -1,7 +1,7 @@
 <template>
   <div class="content-vue">
     <div class="selects">
-        <selection-erp style="cursor: pointer" title="Cadastro de Itens"/>
+        <selection-erp style="cursor: pointer" title="Cadastro de Itens" @getGoTo="goToItens()"/>
         <selection-erp style="cursor: pointer" title="Teste modal" @getGoTo="goToModal()"/>
     </div>
   </div>
@@ -32,5 +32,14 @@ export default {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+        background-color: #ffffff;
+    }
+
+    #content-view {
+        transform: translateX(0);
+    }
+
+    #content-view:active {
+        transform: translateX(10);
     }
 </style>
