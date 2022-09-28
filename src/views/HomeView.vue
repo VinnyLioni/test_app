@@ -31,7 +31,10 @@
             </div>
         </nav>
         <div id="content-view">
-            <router-view/>
+            <transition name="slide" mode="out-in">
+                <router-view />
+            </transition>
+
             <!-- <ModalVue v-if="isModalVisible" @close="closeModal">
                 <template v-slot:header>
                     teste do header dentro do template
@@ -67,7 +70,7 @@ export default {
             (document).ready(function () {
             ('#sidebarCollapse').on('click', function () {
                 ('#sidebar').toggleClass('active');
-                })
+                }) 
             })
         })
     },
@@ -102,6 +105,24 @@ export default {
         font-weight: 300;
         line-height: 1.7rem;
         color: #999;
+    }
+
+    @keyframes slide-in {
+        from { transform: translateY(10px) translateX(0px); opacity: 0}
+        to { transform: translateY(0px) translateX(0px); opacity: 1}
+    }
+
+    @keyframes slide-out {
+        from { transform: translateY(0px); opacity: 1;}
+        to { transform: translateY(0px) translateX(0px); opacity: 0;}
+    }
+
+    .slide-enter-active {
+        animation: slide-in .2s ease;
+    }
+
+    .slide-leave-active {
+        animation: slide-out .2s ease;
     }
 
     #dropdown-area {

@@ -1,15 +1,16 @@
 <template>
   <div class="mod-itens">
     <div id="show-itens">
-      <div id="header-itens">
+      <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
+      <!-- <div id="header-itens">
         <span>Cadastro de Itens</span>
         <div id="return" class="p-2" @click="goBack()">
             Voltar<i class="fas fa-door-open pl-2 pt-1"></i>
         </div>
-      </div>
+      </div> -->
         <!-- <hr> -->
       <div id="session-itens">
-        <button id="button-itens" class="mr-1">
+        <button id="button-itens" class="mr-1" @click="showModal">
             <i class="fas fa-plus pr-1"></i>Cadastrar
         </button>
         <button id="edit-itens" class="mr-1">
@@ -23,6 +24,8 @@
         </button>
       </div>
       <hr>
+      <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
+      </modal-vue>
       <div class="tab-itens">
         <ul id="table-1"></ul>
       </div>
@@ -31,11 +34,27 @@
 </template>
 
 <script>
+import headerItens from '../components/headerItens.vue'
+import ModalVue from '../components/ModalVue.vue'
+
 export default {
   name: "modItens",
+  components: { headerItens,ModalVue },
+  data(){
+    return {
+        isModalVisible: false
+    }
+  },
   methods: {
     goBack(){
       this.$router.go(-1)
+    },
+    showModal(){
+        this.isModalVisible=true
+    },
+    closeModal(){
+        this.isModalVisible=false
+        console.log(this.isModalVisible)
     }
   }
 };
@@ -61,7 +80,7 @@ export default {
         padding: 10px;
     }
 
-    #header-itens {
+    /* #header-itens {
         display: flex;
         justify-content: space-between;
         width:100%;
@@ -91,7 +110,7 @@ export default {
     #return:hover {
         background-color: #b97676;
         color: #ffffff;
-    }
+    } */
 
     #session-itens {
         padding-left: 10px;
