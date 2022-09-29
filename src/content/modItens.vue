@@ -9,37 +9,47 @@
         </div>
       </div> -->
         <!-- <hr> -->
-      <div id="session-itens">
-        <button id="button-itens" class="mr-1" @click="showModal">
-            <i class="fas fa-plus pr-1"></i>Cadastrar
-        </button>
-        <button id="edit-itens" class="mr-1">
-            <i class="fas fa-pen-to-square pr-1"></i>Editar
-        </button>
-        <button id="view-itens">
-            <i class="fas fa-eye pr-1"></i>Visualizar
-        </button>
-        <button id="print-itens">
-            <i class="fas fa-print pr-1"></i>Imprimir
-        </button>
+        <div id="session-itens">
+            <button id="button-itens" class="mr-1" @click="showModal">
+                <i class="fas fa-plus pr-1"></i>Cadastrar
+            </button>
+            <button id="edit-itens" class="mr-1" @click="showModal">
+                <i class="fas fa-pen-to-square pr-1"></i>Editar
+            </button>
+            <button id="view-itens" @click="showModal">
+                <i class="fas fa-eye pr-1"></i>Visualizar
+            </button>
+            <button id="print-itens">
+                <i class="fas fa-print pr-1"></i>Imprimir
+            </button>
+        </div>
+      <!-- <transition name="slide">
+        <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
+        </modal-vue>
+      </transition>
+      <transition name="new-slide">
+      <div v-if="!isModalVisible" class="tab-itens">
+        <ul id="table-1">
+            <li class="1">1</li>
+            <li class="2">2</li>
+            <li class="3">3</li>
+            <li class="4">4</li>
+            <li class="5">5</li>
+            <li class="6">6</li>
+        </ul>
       </div>
-      <hr>
-      <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
-      </modal-vue>
-      <div class="tab-itens">
-        <ul id="table-1"></ul>
-      </div>
+      </transition> -->
     </div>
   </div>
 </template>
 
 <script>
 import headerItens from '../components/headerItens.vue'
-import ModalVue from '../components/ModalVue.vue'
+// import ModalVue from '../components/ModalVue.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens,ModalVue },
+  components: { headerItens },
   data(){
     return {
         isModalVisible: false
@@ -51,6 +61,7 @@ export default {
     },
     showModal(){
         this.isModalVisible=true
+        console.log(this.isModalVisible)
     },
     closeModal(){
         this.isModalVisible=false
@@ -66,6 +77,32 @@ export default {
 
     } */
 
+    @keyframes slide-in {
+        from { transform: translateY(10px) translateX(0px); opacity: 0}
+        to { transform: translateY(0px) translateX(0px); opacity: 1}
+    }
+
+    @keyframes slide-out {
+        from { transform: translateY(0px); opacity: 1;}
+        to { transform: translateY(0px) translateX(0px); opacity: 0;}
+    }
+
+    .slide-enter-active {
+        animation: slide-in .2s ease;
+    }
+
+    .slide-leave-active {
+        animation: slide-out .2s ease;
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+    
     .mod-itens {
         height: 80vh;
         background-color: #ffffff;
@@ -80,40 +117,11 @@ export default {
         padding: 10px;
     }
 
-    /* #header-itens {
-        display: flex;
-        justify-content: space-between;
-        width:100%;
-        padding: 10px;
-        padding-bottom: 15px;
-        font-size: 25px;
-    }
-
-    #header-itens span {
-        align-content: flex-start;
-        padding-top: 5px;
-    }
-
-    #return {
-        font-size: 1.2rem;
-        align-self: flex-end;
-        border: none;
-        color: #b97676;
-        background-color: #ffffff;
-        padding-bottom: 10px;
-        border-radius: 5px;
-        transition: .2s;
-        font-size: 1.1rem;
-        cursor: pointer;
-    }
-
-    #return:hover {
-        background-color: #b97676;
-        color: #ffffff;
-    } */
-
     #session-itens {
+        display: flex;
+        align-content: flex-start;
         padding-left: 10px;
+        width: 100%;
     }
 
     #button-itens {

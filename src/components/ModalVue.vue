@@ -1,33 +1,12 @@
 <template>
-  <transition name="leaveEnter">
-  <div class="modal-backdrop">
-    <div class="modal" role="dialog" aria-labelledby="modalTitle"
-     aria-describedby="modalDescription">
-      <b-container class="modal-box">
+  <transition name="fade" mode="out-in">
+  <div id="back-modal">
+    <div id="modal">
+      <div id="modal-space">
         <div id="exit" @click='close()'>
           <i class="fas fa-x"></i>
         </div>
-        <!-- </button> -->
-        <!-- <header class="modal-header">
-          <slot name="header">
-            Esse é um título padrão
-          </slot>
-          <button type="button" class="btn-close" @click="close">
-            <i class="fas fa-x"></i>
-          </button>
-        </header>
-        <section class="modal-body">        
-          <slot name="body">
-            Espaço padrão do corpo da modal
-          </slot>
-        </section>
-        <footer class="modal-footer">
-          <slot name="footer">
-            Espaço padrão para o rodapé
-          </slot> -->
-        <!-- </footer> -->
-        <!-- <button type="button" class="btn-green" @click='close'>FECHAR</button> -->
-      </b-container>
+      </div>
     </div>
   </div>
   </transition>
@@ -46,29 +25,29 @@ export default {
 
 <style>
 
-  .modal-backdrop {
+  #back-modal {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
     /* display: flex; */
-    position: absolute;
-    height: 100vh
+    background-color:#ffffff;
   }
 
-  .modal {
-    background: #000;
-    /* box-shadow: 2px 2px 20px 1px; */
-    display: flex;
-    border-radius: 20px;
-    flex-direction: column;
-    /* z-index: 10; */
-    /* height: 80%;
-    width: 80%; */
-    /* position: absolute; */
-    
+  #modal {
+    /* background-color: #919191; */
+    border-radius: 5px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    border: none;
     
   }
 
-  .modal-box {
-    /* background-color: #4aae9b; */
-    border-radius: 20px;
+  #modal-space {
+    /* display: flex; */
+    /* align-content: center; */
+    /* background-color: #ffffffff; */
+    height: 90%;
+    width: 80%;
   }
 
   #exit {
@@ -76,22 +55,13 @@ export default {
     cursor: pointer;
   }
 
-  .btn-green {
-    color: white;
-    background: #4aae9b;
-    border: 1px solid #4aae9b;
-    border-radius: 2px;
-  }
 
-  .leaveEnter-enter,
-  .leaveEnter-leave-to {
-    opacity: 0;
-    transition: .3s;
-  }
-
-  .leaveEnter-leave-active,
-  .leaveEnter-enter-active {
-    transition: opacity .3s ease !important;
-  }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+    }
+    
+    .fade-enter, .fade-leave-to {
+        opacity: 0
+    }
 
 </style>
