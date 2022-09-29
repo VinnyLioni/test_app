@@ -25,13 +25,16 @@
                         <li>Novo cliente: <strong>001</strong></li>
                         <li>Novo pedido: <strong>01</strong> Cliente: <strong>002</strong></li>
                         <li class="divider"></li>
-                        <li>Limpar Notificações</li>
+                        <li id="clean">Limpar Notificações</li>
                     </ul>
                 </label>
             </div>
         </nav>
         <div id="content-view">
-            <router-view/>
+            <transition name="slide" mode="out-in">
+                <router-view />
+            </transition>
+
             <!-- <ModalVue v-if="isModalVisible" @close="closeModal">
                 <template v-slot:header>
                     teste do header dentro do template
@@ -68,7 +71,7 @@ export default {
             (document).ready(function () {
             ('#sidebarCollapse').on('click', function () {
                 ('#sidebar').toggleClass('active');
-                })
+                }) 
             })
         })
     },
@@ -105,6 +108,24 @@ export default {
         color: #999;
     }
 
+    @keyframes slide-in {
+        from { transform: translateY(10px) translateX(0px); opacity: 0}
+        to { transform: translateY(0px) translateX(0px); opacity: 1}
+    }
+
+    @keyframes slide-out {
+        from { transform: translateY(0px); opacity: 1;}
+        to { transform: translateY(0px) translateX(0px); opacity: 0;}
+    }
+
+    .slide-enter-active {
+        animation: slide-in .2s ease;
+    }
+
+    .slide-leave-active {
+        animation: slide-out .2s ease;
+    }
+
     #dropdown-area {
         display: inline-block;
         position: relative;
@@ -113,25 +134,39 @@ export default {
     .dd-input {
         display: none;
     }
-    
+
     .dd-menu {
         position: absolute;
         top: 100%;
-        border: 2px solid #ccc;
+        right:0%;
+        /* border: 0.1px solid #6d7fcc; */
         border-radius: 4px;
         padding: 0;
-        margin: 2px 0 0 0;
+        margin: 5px 0 0 0;
         box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+        /* -webkit-box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.32);
+        -moz-box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.32);
+        box-shadow: 0px 2px 9px 0px rgba(0,0,0,0.32); */
         background-color: #ffffff;
         list-style-type: none;
+        color: #43508b;
+        /* transition: all .2s ease; */
     }
 
     .dd-input + .dd-menu {
-        display: none;
+        opacity: 0;
+        transition: all .2s ease;
+        transform: translateY(10px);
+        overflow: hidden;
+        /* z-index: 200; */
     }
 
     .dd-input:checked + .dd-menu {
         display: block;
+        opacity: 1;
+        transform: translateY(0px);
+        position: absolute;
+        z-index: 200;
     }
 
     .dd-menu li {
@@ -143,7 +178,12 @@ export default {
 
     .dd-menu li.divider {
         padding: 0;
-        border-bottom: 1px solid #cccccc;
+        border-bottom: 1px solid #6d7fcc;
+    }
+
+    #clean {
+        color: #ff0000;
+        font-weight: 500;
     }
 
     .header-box {
@@ -151,10 +191,10 @@ export default {
         background: #6d7fcc;
         border: none;
         border-radius: 5px;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
         /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
         /* box-shadow: 0 1px 5px rgba(0, 0, 0, 1.2); */
-        /* -webkit-box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.2); 
+        /* -webkit-box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.2);
         box-shadow: 0px 2px 2px 1px rgba(0,0,0,0.2); */
     }
 
@@ -222,7 +262,7 @@ export default {
         transition: .2s;
     } */
 
-    
+
     .navbar-btn {
         box-shadow: none;
         outline: none !important;
@@ -253,7 +293,10 @@ export default {
         /* justify-content: center; */
         flex-direction: column;
         width: 100%;
-        padding: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        padding-bottom: 0px;
         min-height: 100vh;
         transition: all .3s;
         background-color: #eaeeff;

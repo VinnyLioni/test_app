@@ -1,9 +1,14 @@
 <template>
   <transition name="leaveEnter">
   <div class="modal-backdrop">
-    <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
+    <div class="modal" role="dialog" aria-labelledby="modalTitle"
+     aria-describedby="modalDescription">
       <b-container class="modal-box">
-        <header class="modal-header">
+        <div id="exit" @click='close()'>
+          <i class="fas fa-x"></i>
+        </div>
+        <!-- </button> -->
+        <!-- <header class="modal-header">
           <slot name="header">
             Esse é um título padrão
           </slot>
@@ -19,9 +24,9 @@
         <footer class="modal-footer">
           <slot name="footer">
             Espaço padrão para o rodapé
-          </slot>
-          <button type="button" class="btn-green" @click='close'></button>
-        </footer>
+          </slot> -->
+        <!-- </footer> -->
+        <!-- <button type="button" class="btn-green" @click='close'>FECHAR</button> -->
       </b-container>
     </div>
   </div>
@@ -33,7 +38,7 @@ export default {
   name: 'ModalVue',
   methods: {
     close(){
-      this.$emit('close')
+      this.$emit('closeMd')
     }
   }
 }
@@ -42,65 +47,33 @@ export default {
 <style>
 
   .modal-backdrop {
-    /* position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0; */
-    background-color: rgba(0, 0, 0, 0.3);
-    display: flex;
-    /* justify-content: center;
-    align-items: center; */
+    /* display: flex; */
+    position: absolute;
+    height: 100vh
   }
 
   .modal {
     background: #000;
-    box-shadow: 2px 2px 20px 1px;
-    /* overflow-x: auto; */
+    /* box-shadow: 2px 2px 20px 1px; */
     display: flex;
+    border-radius: 20px;
     flex-direction: column;
+    /* z-index: 10; */
+    /* height: 80%;
+    width: 80%; */
+    /* position: absolute; */
+    
+    
   }
 
   .modal-box {
-    background-color: #4aae9b;
+    /* background-color: #4aae9b; */
     border-radius: 20px;
   }
 
-  .modal-header,
-  .modal-footer {
-    padding: 15px;
-    /* display: flex; */
-  }
-
-  .modal-header {
-    /* position: relative; */
-    border-bottom: 1px solid #eeeeee;
-    color: #4aae9b;
-    justify-content: space-between;
-  }
-
-  .modal-footer {
-    border-top: 1px solid #eeeeee;
-    flex-direction: column;
-    /* justify-content: flex-end; */
-  }
-
-  .modal-body {
-    /* position: relative; */
-    padding: 20px 10px;
-  }
-
-  .btn-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: none;
-    /* font-size: 10px; */
-    padding: 10px;
+  #exit {
+    display: flex;
     cursor: pointer;
-    font-weight: bold;
-    color: #4aae9b;
-    background: transparent;
   }
 
   .btn-green {
@@ -113,6 +86,7 @@ export default {
   .leaveEnter-enter,
   .leaveEnter-leave-to {
     opacity: 0;
+    transition: .3s;
   }
 
   .leaveEnter-leave-active,
