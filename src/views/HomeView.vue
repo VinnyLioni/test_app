@@ -14,17 +14,35 @@
                 <h3>
                     ViMk ERP
                 </h3>
-                <div id="right-side-itens">
-                    <button id="notifyButton" @click="toggleModal"
-                    class="p-2 mr-4">
-                        <i class="fas fa-bell">
-                        </i> Notificações
-                    </button>
-                </div>
+                <label id="dropdown-area">
+                    <div id="notifyButton" class="p-2">
+                        Notificações<i class="fas fa-bell pl-2 pt-1"></i>
+                    </div>
+                    <input type="checkbox" class="dd-input" id="test">
+                    <ul class="dd-menu">
+                        <li>Estoque baixo: <strong>TURB-001</strong></li>
+                        <li>Estoque baixo: <strong>ECU-FT450</strong></li>
+                        <li>Novo cliente: <strong>001</strong></li>
+                        <li>Novo pedido: <strong>01</strong> Cliente: <strong>002</strong></li>
+                        <li class="divider"></li>
+                        <li>Limpar Notificações</li>
+                    </ul>
+                </label>
             </div>
         </nav>
         <div id="content-view">
             <router-view/>
+            <!-- <ModalVue v-if="isModalVisible" @close="closeModal">
+                <template v-slot:header>
+                    teste do header dentro do template
+                </template>
+                <template v-slot:body>
+                    teste da section dentro do template
+                </template>
+                <template v-slot:footer>
+                    teste do rodapé no template
+                </template>
+            </ModalVue> -->
         </div>
         <ModalVue />
     </div>
@@ -34,12 +52,17 @@
 <script>
 import { mapState } from 'vuex'
 import SidebarVue from '../components/Sidebar.vue'
-import ModalVue from '../components/ModalVue.vue'
+// import ModalVue from '../components/ModalVue.vue'
 
 export default {
     name: 'HomeView',
-    computed: mapState(['isMenuVisible','IsModalVisible']),
-    components: { SidebarVue, ModalVue },
+    computed: mapState(['isMenuVisible']),
+    components: { SidebarVue },
+    // data(){
+    //     return {
+    //         isModalVisible: false
+    //     }
+    // },
     mounted(){
         (function(){
             (document).ready(function () {
@@ -53,8 +76,11 @@ export default {
         toggleMenu(){
             this.$store.commit('toggleMenu')
         },
-        seeModal(){
-            this.$store.commit('toggleModal')
+        showModal(){
+            this.isModalVisible = true
+        },
+        closeModal(){
+            this.isModalVisible = false
         }
     }
 }
@@ -79,6 +105,47 @@ export default {
         color: #999;
     }
 
+    #dropdown-area {
+        display: inline-block;
+        position: relative;
+    }
+
+    .dd-input {
+        display: none;
+    }
+    
+    .dd-menu {
+        position: absolute;
+        top: 100%;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        padding: 0;
+        margin: 2px 0 0 0;
+        box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+        background-color: #ffffff;
+        list-style-type: none;
+    }
+
+    .dd-input + .dd-menu {
+        display: none;
+    }
+
+    .dd-input:checked + .dd-menu {
+        display: block;
+    }
+
+    .dd-menu li {
+        margin: 0px 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+        /* white-space: nowrap; */
+    }
+
+    .dd-menu li.divider {
+        padding: 0;
+        border-bottom: 1px solid #cccccc;
+    }
+
     .header-box {
         padding: 15px 10px;
         background: #6d7fcc;
@@ -95,7 +162,8 @@ export default {
         display: flex;
         justify-content: space-between;
         padding-left: 10px;
-        padding-top: 2px;
+        padding-top: 6px;
+        padding-right: 10px;
         /* padding-right: 10px; */
         /* display: flex;
         padding-top: 2px; */
@@ -111,7 +179,18 @@ export default {
         transition: 0.2s
     }
 
-    #row-itens #sideBarCollapse:hover {
+    #notifyButton {
+        align-items: flex-end;
+        cursor: pointer;
+        border-radius: 5px;
+        color: #fff;
+        border: none;
+        background: #6d7fcc;
+        transition: .2s;
+
+    }
+
+    #row-itens #sideBarCollapse:hover, #notifyButton:hover {
         background: #eaeeff;
         color: #6d7fcc;
         transition: 0.2s;
@@ -126,22 +205,22 @@ export default {
         font-size: 200%;
     }
 
-    #row-itens #notifyButton {
-        /* padding-top: 10px; */
+    /* #row-itens #notifyButton {
+        padding-top: 10px;
         align-items: flex-end;
         border-radius: 5px;
         color: #fff;
         border: none;
         background: #6d7fcc;
         transition: 0.2s;
-        /* font-size: 80%; */
+        font-size: 80%;
     }
 
-    #row-itens #notifyButton:hover {
+    #row-itens #notifyButton:hover  {
         background: #eaeeff;
         color: #6d7fcc;
         transition: .2s;
-    }
+    } */
 
     
     .navbar-btn {
@@ -178,13 +257,14 @@ export default {
         min-height: 100vh;
         transition: all .3s;
         background-color: #eaeeff;
+        transition: .3s;
     }
 
-    #content-vue {
+    /* #content-vue {
         background-color: #000;
         display: flex;
         flex-direction: column;
-    }
+    } */
 
     @media (max-width: 768px) {
         #sidebar {
@@ -203,9 +283,9 @@ export default {
             display: none;
         }
 
-    #__BVID__14___BV_modal_content_ {
+    /* #__BVID__14___BV_modal_content_ {
         background-color: #eaeeff;
-    }
+    } */
 
     }
 </style>
