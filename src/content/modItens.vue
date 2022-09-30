@@ -23,12 +23,12 @@
                 <i class="fas fa-print pr-1"></i>Imprimir
             </button>
         </div>
-      <!-- <transition name="slide">
+      <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
         </modal-vue>
       </transition>
       <transition name="new-slide">
-      <div v-if="!isModalVisible" class="tab-itens">
+      <div class="tab-itens">
         <ul id="table-1">
             <li class="1">1</li>
             <li class="2">2</li>
@@ -38,18 +38,18 @@
             <li class="6">6</li>
         </ul>
       </div>
-      </transition> -->
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
 import headerItens from '../components/headerItens.vue'
-// import ModalVue from '../components/ModalVue.vue'
+import ModalVue from '../components/ModalVue.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens },
+  components: { headerItens,ModalVue },
   data(){
     return {
         isModalVisible: false
