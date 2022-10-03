@@ -16,7 +16,7 @@
             <button id="edit-itens" class="mr-1" @click="showModal">
                 <i class="fas fa-pen-to-square pr-1"></i>Editar
             </button>
-            <button id="view-itens" @click="showModal">
+            <button id="view-itens" class="mr-1" @click="showModal">
                 <i class="fas fa-eye pr-1"></i>Visualizar
             </button>
             <button id="print-itens">
@@ -25,10 +25,13 @@
         </div>
       <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
+            <div class="header-modal" slot="header">
+                Cadastro do Item
+            </div>
         </modal-vue>
       </transition>
       <transition name="new-slide">
-      <div class="tab-itens">
+      <div class="tab-itens" >
         <ul id="table-1">
             <li class="1">1</li>
             <li class="2">2</li>
@@ -73,6 +76,11 @@ export default {
 </script>
 
 <style>
+    
+    .header-modal {
+        font-size: 1.3rem;
+    }
+
     /* .tab-itens {
 
     } */

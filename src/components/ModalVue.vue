@@ -1,14 +1,27 @@
 <template>
-  <transition name="fade" mode="out-in">
-  <div id="back-modal">
-    <div id="modal">
-      <div id="modal-space">
-        <div id="exit" @click='close()'>
-          <i class="fas fa-x"></i>
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+            <button class="modal-default-button" @click="close()"><i class="fas fa-xmark p-1"></i></button>
+          </div>
+          <div class="modal-body">
+            <slot name="body">
+              default body
+            </slot>
+          </div>
+          <div class="modal-footer">
+            <slot name="footer">
+              default footer
+            </slot>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </transition>
 </template>
 
@@ -19,49 +32,89 @@ export default {
     close(){
       this.$emit('closeMd')
     }
+  },
+  data(){
+    return {
+      showModal: false
+    }
   }
 }
 </script>
 
 <style>
 
-  #back-modal {
-    height: 100%;
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: table;
+    /* transition: opacity 0.3s ease; */
     border-radius: 5px;
-    /* display: flex; */
-    background-color:#ffffff;
-  }
-
-  #modal {
-    /* background-color: #919191; */
-    border-radius: 5px;
-    /* display: flex; */
-    /* flex-direction: column; */
+    -webkit-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    -moz-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
     border: none;
     
   }
 
-  #modal-space {
-    /* display: flex; */
-    /* align-content: center; */
-    /* background-color: #ffffffff; */
-    height: 90%;
-    width: 80%;
+  .modal-wrapper {
+    display: table-cell;
+    padding-top: 8%;
   }
 
-  #exit {
+  .modal-container {
+    width: 600px;
+    margin: 0px auto;
+    padding: 5px 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all .3s ease;
+  }
+
+  .modal-header {
     display: flex;
-    cursor: pointer;
+    /* justify-content: center; */
   }
 
+  .modal-header h3 {
+    margin-top: 0;
+    color: #343953;
+  }
 
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    
-    .fade-enter, .fade-leave-to {
-        opacity: 0
-    }
+  .modal-body {
+    margin: 20px 0;
+  }
 
+  .modal-default-button {
+    padding-top: 0px;
+    margin-top: 2px;
+    display: flex;
+    transition: .3s;
+    /* top: 0; */
+  }
+
+  .modal-default-button:hover {
+    background-color: #343953;
+    color: #fff;
+    transition: .3s;
+    border-radius: 5px;
+  }
+
+  .modal-enter {
+    opacity: 0;
+  }
+
+  .modal-leave-active {
+    opacity: 0;
+  }
+
+  .modal-enter .modal-container, .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
 </style>

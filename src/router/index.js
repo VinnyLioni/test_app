@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import ContentVue from "../components/ContentVue";
 import MainContentVue from "../components/MainContent";
 import modItens from "../content/modItens";
+import ModalVue from "../components/ModalVue";
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,11 @@ const routes = [
     path: "/itens",
     name: "itens",
     component: modItens,
+  },
+  {
+    path: "/teste",
+    name: "modal",
+    component: ModalVue,
   },
 ];
 
