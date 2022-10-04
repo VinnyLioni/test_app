@@ -95,6 +95,7 @@ export default {
     margin-top: 2px;
     display: flex;
     transition: .3s;
+    border-radius: 5px;
     /* top: 0; */
   }
 

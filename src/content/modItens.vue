@@ -2,13 +2,6 @@
   <div class="mod-itens">
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
-      <!-- <div id="header-itens">
-        <span>Cadastro de Itens</span>
-        <div id="return" class="p-2" @click="goBack()">
-            Voltar<i class="fas fa-door-open pl-2 pt-1"></i>
-        </div>
-      </div> -->
-        <!-- <hr> -->
         <div id="session-itens">
             <button id="button-itens" class="mr-1" @click="showModal">
                 <i class="fas fa-plus pr-1"></i>Cadastrar
@@ -28,6 +21,30 @@
             <div class="header-modal" slot="header">
                 Cadastro do Item
             </div>
+            <main class="body-modal" slot="body">
+                <div class='lines' id="line-1">
+                    <form id="search-box">
+                        <span class="mr-1">Descrição</span>
+                        <input type="text">
+                    </form>
+                    <form id="search-box">
+                        <span class="mr-1">Descrição Completa</span>
+                        <input type="text">
+                    </form>
+
+                </div>
+                <div class='lines' id="line-2">
+                    <form id="search-box">
+                        <span class="mr-1">Fornecedor</span>
+                        <b-form-select v-model="selected" :options="gforn"></b-form-select>
+                    </form>
+                    <form id="search-box">
+                        <span class="mr-1">Descrição Completa</span>
+                        <input type="text">
+                    </form>
+
+                </div>
+            </main>
         </modal-vue>
       </transition>
       <transition name="new-slide">
@@ -55,7 +72,12 @@ export default {
   components: { headerItens,ModalVue },
   data(){
     return {
-        isModalVisible: false
+        isModalVisible: false,
+        selected: null,
+        gforn: [
+            { value: null, text: 'Selecione um Fornecedor'},
+            { value: '1', text: 'teste'}
+        ]
     }
   },
   methods: {
@@ -76,6 +98,33 @@ export default {
 </script>
 
 <style>
+
+    .custom-select {
+        border: none;
+        outline: none;
+    }
+
+    .custom-select:focus {
+        border-color: #387080;
+    }
+
+    .lines {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        /* margin-left: 20px; */
+    }
+
+    #search-box span {
+        width: 100%;
+        display: flex;
+    }
+
+    #search-box input {
+        border: 1px solid ;
+        border-radius: 5px;
+    }
     
     .header-modal {
         font-size: 1.3rem;
