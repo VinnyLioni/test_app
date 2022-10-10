@@ -7,11 +7,11 @@
             <slot name="header">
               default header
             </slot>
-            <button class="modal-default-button" @click="close()"><i class="fas fa-xmark p-1"></i></button>
+            <button class="modal-default-button p-1" @click="close()">Voltar <i class="fas fa-xmark p-1"></i></button>
           </div>
           <div class="modal-body">
             <slot name="body">
-              default body
+              
             </slot>
           </div>
           <div class="modal-footer">
@@ -54,9 +54,9 @@ export default {
     display: table;
     /* transition: opacity 0.3s ease; */
     border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    /* -webkit-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
     -moz-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
-    box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28); */
     border: none;
     
   }
@@ -70,7 +70,7 @@ export default {
     width: 600px;
     margin: 0px auto;
     padding: 5px 10px;
-    background-color: #fff;
+    background-color: #eaeeff;
     border-radius: 5px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all .3s ease;
@@ -87,6 +87,8 @@ export default {
   }
 
   .modal-body {
+    /* display: flex;
+    flex-flow: column; */
     margin: 20px 0;
   }
 
@@ -96,11 +98,12 @@ export default {
     display: flex;
     transition: .3s;
     border-radius: 5px;
+    color: #b97676;
     /* top: 0; */
   }
 
   .modal-default-button:hover {
-    background-color: #343953;
+    background-color: #b97676;
     color: #fff;
     transition: .3s;
     border-radius: 5px;

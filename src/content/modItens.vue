@@ -22,29 +22,47 @@
                 Cadastro do Item
             </div>
             <main class="body-modal" slot="body">
-                <div class='lines' id="line-1">
-                    <form id="search-box">
-                        <span class="mr-1">Descrição</span>
-                        <input type="text">
-                    </form>
-                    <form id="search-box">
-                        <span class="mr-1">Descrição Completa</span>
-                        <input type="text">
-                    </form>
-
-                </div>
-                <div class='lines' id="line-2">
-                    <form id="search-box">
-                        <span class="mr-1">Fornecedor</span>
-                        <b-form-select v-model="selected" :options="gforn"></b-form-select>
-                    </form>
-                    <form id="search-box">
-                        <span class="mr-1">Descrição Completa</span>
-                        <input type="text">
-                    </form>
-
+                <div class="modal-register">
+                    <div id="first-line">
+                        <div class="first-input">
+                            <label>Descrição</label>
+                            <br>
+                            <input type="text" id="first-input">
+                        </div>
+                        <div class="second-input">
+                            <label>Descrição Completa</label>
+                            <br>
+                            <input type="text" id="second-input">
+                        </div>
+                    </div>
+                    <div id="second-line">
+                        <div class="first-input">
+                            <label>Grupo de Item</label>
+                            <br>
+                            <div id="group-input">
+                                <input type="text">
+                                <button><i class="fas fa-bars"></i></button>
+                            </div>
+                        </div>
+                        <div class="second-input">
+                            <label for="units">Unidade de Medida</label>
+                            <br>
+                            <select name="unit-select" id="unity-select">
+                                <option value="" disabled>Selecione o Controle</option>
+                                <option value="UN">Unidade</option>
+                                <option value="CX">Caixa</option>
+                                <option value="PC">Pacote</option>
+                                <option value="KG">Quilograma</option>
+                                <option value="MG">Miligrama</option>
+                                <option value="L">Litros</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </main>
+            <footer slot="footer">
+                <div class="footer-modal"></div>
+            </footer>
         </modal-vue>
       </transition>
       <transition name="new-slide">
@@ -74,6 +92,7 @@ export default {
     return {
         isModalVisible: false,
         selected: null,
+        unity: "",
         gforn: [
             { value: null, text: 'Selecione um Fornecedor'},
             { value: '1', text: 'teste'}
@@ -99,21 +118,83 @@ export default {
 
 <style>
 
-    .custom-select {
-        border: none;
+    .body-modal input {
+        padding: 5px;
+    }
+
+    #first-input {
+        border-radius: 5px;
+        text-align: left;
+    }
+
+    #second-input {
+        border-radius: 5px;
+    }
+
+    #group-input {
+        width: 200px;
+    }
+
+    #group-input input {
+        width: 170px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #group-input button {
+        width: 30px;
+        height: 34px;
+        background-color: #ffffff;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    #group-input button i {
+        font-size: 1rem;
+        display: flex;
+        padding: 10px;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .modal-register input {
+        width: 200px
+    }
+
+    #unity-select {
+        width: 200px;
+        outline: none;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+
+    /* #unity-select option {
+        cursor: pointer;
+    }  */
+
+    .modal-register input {
         outline: none;
     }
 
-    .custom-select:focus {
-        border-color: #387080;
+    /* .first-input {
+        width: 50%;
     }
 
-    .lines {
+    .second-input {
+        width: 50%
+    } */
+
+    #first-line {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        /* margin-left: 20px; */
+        justify-content: space-around;
+        padding-bottom: 30px;
+    }
+    
+    #second-line {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 30px;
     }
 
     #search-box span {
@@ -122,8 +203,14 @@ export default {
     }
 
     #search-box input {
-        border: 1px solid ;
+        border: none ;
+        outline: none;
         border-radius: 5px;
+    }
+
+    #search-box input:focus {
+        border: none ;
+        /* border-radius: 5px; */
     }
     
     .header-modal {
