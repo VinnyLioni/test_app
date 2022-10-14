@@ -23,6 +23,7 @@
             </div>
             <main class="body-modal" slot="body">
                 <div class="modal-register">
+                    <input type="hidden" id="codi-item">
                     <div id="first-line">
                         <div class="first-input">
                             <label>Descrição</label>
@@ -61,22 +62,15 @@
                 </div>
             </main>
             <footer slot="footer">
-                <div class="footer-modal"></div>
+                <div class="footer-modal">
+                    <button id="save-itens"><i class="fas fa-upload"></i> Salvar</button>
+                </div>
             </footer>
         </modal-vue>
       </transition>
-      <transition name="new-slide">
-      <div class="tab-itens" >
-        <ul id="table-1">
-            <li class="1">1</li>
-            <li class="2">2</li>
-            <li class="3">3</li>
-            <li class="4">4</li>
-            <li class="5">5</li>
-            <li class="6">6</li>
-        </ul>
-      </div>
-      </transition>
+    </div>
+    <div class="tab-itens" >
+        <table-vue :headers="myHeaders" :items="myItems"/>
     </div>
   </div>
 </template>
@@ -84,18 +78,43 @@
 <script>
 import headerItens from '../components/headerItens.vue'
 import ModalVue from '../components/ModalVue.vue'
+import TableVue from '../components/tabVue.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens,ModalVue },
+  components: { headerItens,ModalVue,TableVue },
   data(){
     return {
         isModalVisible: false,
         selected: null,
         unity: "",
-        gforn: [
-            { value: null, text: 'Selecione um Fornecedor'},
-            { value: '1', text: 'teste'}
+        // gforn: [
+        //     { value: null, text: 'Selecione um Fornecedor'},
+        //     { value: '1', text: 'teste'}
+        // ]
+        myHeaders: [
+            { key: 'CODI', label: 'Código'},
+            { key: 'DES', label: 'Descrição'},
+            { key: 'CGRU', label: 'Grupo'},
+            { key: 'UN', label: 'Unidade de Medida'}
+        ],
+        myItems: [
+            { CODI: '100', DES: 'Turbina HX-40', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '200', DES: 'Turbina HX-35', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '300', DES: 'Turbina HX-55', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '400', DES: 'Fueltech FT-450', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '500', DES: 'Fueltech FT-550', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '600', DES: 'Manometro 60mm Cronomac', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '700', DES: 'Manometro 52mm AutoMeter', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '800', DES: 'Mufla 2E', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '900', DES: 'Mufla 3E', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1000', DES: 'Weber 450', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1100', DES: 'Weber TLDZ', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1200', DES: 'Bicos 80lb', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1300', DES: 'Bicos 120lb', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1400', DES: 'Bobina MI', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1500', DES: 'Módulo SparkPro', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1600', DES: 'BoostController', CGRU: 'Turbinas', UN: 'PÇ'}
         ]
     }
   },
@@ -117,6 +136,28 @@ export default {
 </script>
 
 <style>
+
+    .tab-itens {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        width: 100%;
+        padding: 10px;
+        height: 60%;
+    }
+
+    #save-itens {
+        color: #127a5b;
+        border-radius: 5px;
+        padding: 5px;
+        transition: .2s;
+    }
+
+    #save-itens:hover {
+        background-color: #1ab486;
+        transition: .2s;
+        color: #ffffff;
+    }
 
     .body-modal input {
         padding: 5px;
