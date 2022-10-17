@@ -69,9 +69,9 @@
         </modal-vue>
       </transition>
     </div>
-    <div class="tab-itens" >
-        <table-vue :headers="myHeaders" :items="myItems"/>
-    </div>
+    <table-vue :headers="myHeaders" :items="myItems">
+        <header></header>
+    </table-vue>
   </div>
 </template>
 
@@ -136,15 +136,6 @@ export default {
 </script>
 
 <style>
-
-    .tab-itens {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        width: 100%;
-        padding: 10px;
-        height: 60%;
-    }
 
     #save-itens {
         color: #127a5b;
