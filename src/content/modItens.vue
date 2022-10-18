@@ -2,7 +2,8 @@
   <div class="mod-itens">
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
-        <div id="session-itens">
+      <edit-vue @openMyModal="showModal()" />
+        <!-- <div id="session-itens">
             <button id="button-itens" class="mr-1" @click="showModal">
                 <i class="fas fa-plus pr-1"></i>Cadastrar
             </button>
@@ -12,10 +13,13 @@
             <button id="view-itens" class="mr-1" @click="showModal">
                 <i class="fas fa-eye pr-1"></i>Visualizar
             </button>
+            <button id="filter-itens" class="mr-1" @click="showModal">
+                <i class="fas fa-filter pr-1"></i>Filtro
+            </button>
             <button id="print-itens">
                 <i class="fas fa-print pr-1"></i>Imprimir
             </button>
-        </div>
+        </div> -->
       <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
             <div class="header-modal" slot="header">
@@ -69,9 +73,10 @@
         </modal-vue>
       </transition>
     </div>
-    <table-vue :headers="myHeaders" :items="myItems">
-        <header></header>
-    </table-vue>
+    <div class="myTab">
+        <table-vue :headers="myHeaders" :items="myItems">
+        </table-vue>
+    </div>
   </div>
 </template>
 
@@ -79,24 +84,21 @@
 import headerItens from '../components/headerItens.vue'
 import ModalVue from '../components/ModalVue.vue'
 import TableVue from '../components/tabVue.vue'
+import editVue from '../components/editButtons.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens,ModalVue,TableVue },
+  components: { headerItens,ModalVue,TableVue,editVue },
   data(){
     return {
         isModalVisible: false,
         selected: null,
         unity: "",
-        // gforn: [
-        //     { value: null, text: 'Selecione um Fornecedor'},
-        //     { value: '1', text: 'teste'}
-        // ]
         myHeaders: [
-            { key: 'CODI', label: 'Código'},
-            { key: 'DES', label: 'Descrição'},
-            { key: 'CGRU', label: 'Grupo'},
-            { key: 'UN', label: 'Unidade de Medida'}
+            { key: 'CODI', label: 'Código', sortable: true},
+            { key: 'DES', label: 'Descrição', sortable: true},
+            { key: 'CGRU', label: 'Grupo', sortable: true},
+            { key: 'UN', label: 'Unidade de Medida', sortable: true}
         ],
         myItems: [
             { CODI: '100', DES: 'Turbina HX-40', CGRU: 'Turbinas', UN: 'PÇ'},
@@ -136,6 +138,11 @@ export default {
 </script>
 
 <style>
+
+    .myTab {
+        display: flex;
+        justify-content: space-around;
+    }
 
     #save-itens {
         color: #127a5b;
@@ -344,6 +351,21 @@ export default {
 
     #edit-itens:hover {
         background-color: #7c80a0;
+        color: #ffffff;
+        transition: .2s;
+    }
+
+    #filter-itens {
+        border: none;
+        background-color: #ffffff;
+        color: #4e505e;
+        border-radius: 5px;
+        padding: 8px;
+        transition: .2s;
+    }
+
+    #filter-itens:hover {
+        background-color: #4e505e;
         color: #ffffff;
         transition: .2s;
     }

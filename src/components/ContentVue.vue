@@ -10,7 +10,7 @@
                 <selection-erp style="cursor: pointer" title="Itens" 
                 icon="fas fa-cube pt-1 pr-2" @getGoTo="goToItens()"/>
                 <selection-erp style="cursor: pointer" title="Clientes" 
-                icon="fas fa-address-book pt-1 pr-2" @getGoTo="goToModal()"/>
+                icon="fas fa-address-book pt-1 pr-2" @getGoTo="goToClient()"/>
                 <selection-erp style="cursor: pointer" title="Fornecedores" 
                 icon="fas fa-handshake pt-1 pr-2" @getGoTo="goToItens()"/>
             </div>
@@ -19,7 +19,7 @@
                 <selection-erp style="cursor: pointer" title="Famílias de Itens" 
                     icon="fas fa-shapes pt-1 pr-2" @getGoTo="goToItens()"/>
                 <selection-erp style="cursor: pointer" title="Grupos de Itens" 
-                    icon="fas fa-cubes pt-1 pr-2" @getGoTo="goToModal()"/>
+                    icon="fas fa-cubes pt-1 pr-2" @getGoTo="goToClient()"/>
                 <selection-erp style="cursor: pointer" title="Depósitos" 
                     icon="fas fa-warehouse pr-2" @getGoTo="goToItens()"/>
             </div>
@@ -41,9 +41,9 @@ export default {
                 '/itens'
             )
         },
-        goToModal(){
+        goToClient(){
             this.$router.push(
-                '/modal'
+                '/clients'
             )
         },
         goBack(){

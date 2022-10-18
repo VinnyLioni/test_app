@@ -63,7 +63,7 @@ export default {
 
   .modal-wrapper {
     display: table-cell;
-    padding-top: 8%;
+    padding-top: 5%;
   }
 
   .modal-container {
