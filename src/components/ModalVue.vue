@@ -1,35 +1,27 @@
 <template>
-  <transition name="leaveEnter">
-  <div class="modal-backdrop">
-    <div class="modal" role="dialog" aria-labelledby="modalTitle"
-     aria-describedby="modalDescription">
-      <b-container class="modal-box">
-        <div id="exit" @click='close()'>
-          <i class="fas fa-x"></i>
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+            <button class="modal-default-button p-1" @click="close()">Voltar <i class="fas fa-xmark p-1"></i></button>
+          </div>
+          <div class="modal-body">
+            <slot name="body">
+              
+            </slot>
+          </div>
+          <div class="modal-footer">
+            <slot name="footer">
+              default footer
+            </slot>
+          </div>
         </div>
-        <!-- </button> -->
-        <!-- <header class="modal-header">
-          <slot name="header">
-            Esse é um título padrão
-          </slot>
-          <button type="button" class="btn-close" @click="close">
-            <i class="fas fa-x"></i>
-          </button>
-        </header>
-        <section class="modal-body">        
-          <slot name="body">
-            Espaço padrão do corpo da modal
-          </slot>
-        </section>
-        <footer class="modal-footer">
-          <slot name="footer">
-            Espaço padrão para o rodapé
-          </slot> -->
-        <!-- </footer> -->
-        <!-- <button type="button" class="btn-green" @click='close'>FECHAR</button> -->
-      </b-container>
+      </div>
     </div>
-  </div>
   </transition>
 </template>
 
@@ -40,58 +32,93 @@ export default {
     close(){
       this.$emit('closeMd')
     }
+  },
+  data(){
+    return {
+      showModal: false
+    }
   }
 }
 </script>
 
 <style>
 
-  .modal-backdrop {
-    /* display: flex; */
-    position: absolute;
-    height: 100vh
-  }
-
-  .modal {
-    background: #000;
-    /* box-shadow: 2px 2px 20px 1px; */
-    display: flex;
-    border-radius: 20px;
-    flex-direction: column;
-    /* z-index: 10; */
-    /* height: 80%;
-    width: 80%; */
-    /* position: absolute; */
-    
+  .modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: table;
+    /* transition: opacity 0.3s ease; */
+    border-radius: 5px;
+    /* -webkit-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    -moz-box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28);
+    box-shadow: 0px 0px 41px -5px rgba(0,0,0,0.28); */
+    border: none;
     
   }
 
-  .modal-box {
-    /* background-color: #4aae9b; */
-    border-radius: 20px;
+  .modal-wrapper {
+    display: table-cell;
+    padding-top: 5%;
   }
 
-  #exit {
+  .modal-container {
+    width: 600px;
+    margin: 0px auto;
+    padding: 5px 10px;
+    background-color: #eaeeff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all .3s ease;
+  }
+
+  .modal-header {
     display: flex;
-    cursor: pointer;
+    /* justify-content: center; */
   }
 
-  .btn-green {
-    color: white;
-    background: #4aae9b;
-    border: 1px solid #4aae9b;
-    border-radius: 2px;
+  .modal-header h3 {
+    margin-top: 0;
+    color: #343953;
   }
 
-  .leaveEnter-enter,
-  .leaveEnter-leave-to {
-    opacity: 0;
+  .modal-body {
+    /* display: flex;
+    flex-flow: column; */
+    margin: 20px 0;
+  }
+
+  .modal-default-button {
+    padding-top: 0px;
+    margin-top: 2px;
+    display: flex;
     transition: .3s;
+    border-radius: 5px;
+    color: #b97676;
+    /* top: 0; */
   }
 
-  .leaveEnter-leave-active,
-  .leaveEnter-enter-active {
-    transition: opacity .3s ease !important;
+  .modal-default-button:hover {
+    background-color: #b97676;
+    color: #fff;
+    transition: .3s;
+    border-radius: 5px;
   }
 
+  .modal-enter {
+    opacity: 0;
+  }
+
+  .modal-leave-active {
+    opacity: 0;
+  }
+
+  .modal-enter .modal-container, .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
 </style>

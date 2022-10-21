@@ -32,6 +32,7 @@
         </nav>
         <div id="content-view">
             <transition name="slide" mode="out-in">
+                <!-- <modal-vue v-if="isModalVisible" @closeMd="closeModal()"></modal-vue> -->
                 <router-view />
             </transition>
 

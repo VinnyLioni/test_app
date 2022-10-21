@@ -2,33 +2,63 @@
   <div class="mod-itens">
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
-      <!-- <div id="header-itens">
-        <span>Cadastro de Itens</span>
-        <div id="return" class="p-2" @click="goBack()">
-            Voltar<i class="fas fa-door-open pl-2 pt-1"></i>
-        </div>
-      </div> -->
-        <!-- <hr> -->
-      <div id="session-itens">
-        <button id="button-itens" class="mr-1" @click="showModal">
-            <i class="fas fa-plus pr-1"></i>Cadastrar
-        </button>
-        <button id="edit-itens" class="mr-1">
-            <i class="fas fa-pen-to-square pr-1"></i>Editar
-        </button>
-        <button id="view-itens">
-            <i class="fas fa-eye pr-1"></i>Visualizar
-        </button>
-        <button id="print-itens">
-            <i class="fas fa-print pr-1"></i>Imprimir
-        </button>
-      </div>
-      <hr>
-      <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
-      </modal-vue>
-      <div class="tab-itens">
-        <ul id="table-1"></ul>
-      </div>
+      <edit-vue @openMyModal="showModal()" />
+      <transition name="slide">
+        <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
+            <div class="header-modal" slot="header">
+                Cadastro do Item
+            </div>
+            <main class="body-modal" slot="body">
+                <div class="modal-register">
+                    <input type="hidden" id="codi-item">
+                    <div id="first-line">
+                        <div class="first-input">
+                            <label>Descrição</label>
+                            <br>
+                            <input type="text" id="first-input">
+                        </div>
+                        <div class="second-input">
+                            <label>Descrição Completa</label>
+                            <br>
+                            <input type="text" id="second-input">
+                        </div>
+                    </div>
+                    <div id="second-line">
+                        <div class="first-input">
+                            <label>Grupo de Item</label>
+                            <br>
+                            <div id="group-input">
+                                <input type="text">
+                                <button><i class="fas fa-bars"></i></button>
+                            </div>
+                        </div>
+                        <div class="second-input">
+                            <label for="units">Unidade de Medida</label>
+                            <br>
+                            <select name="unit-select" id="unity-select">
+                                <option value="" disabled>Selecione o Controle</option>
+                                <option value="UN">Unidade</option>
+                                <option value="CX">Caixa</option>
+                                <option value="PC">Pacote</option>
+                                <option value="KG">Quilograma</option>
+                                <option value="MG">Miligrama</option>
+                                <option value="L">Litros</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer slot="footer">
+                <div class="footer-modal">
+                    <button id="save-itens"><i class="fas fa-upload"></i> Salvar</button>
+                </div>
+            </footer>
+        </modal-vue>
+      </transition>
+    </div>
+    <div class="myTab">
+        <table-vue :headers="myHeaders" :items="myItems">
+        </table-vue>
     </div>
   </div>
 </template>
@@ -36,21 +66,50 @@
 <script>
 import headerItens from '../components/headerItens.vue'
 import ModalVue from '../components/ModalVue.vue'
+import TableVue from '../components/tabVue.vue'
+import editVue from '../components/editButtons.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens,ModalVue },
+  components: { headerItens,ModalVue,TableVue,editVue },
   data(){
     return {
-        isModalVisible: false
+        isModalVisible: false,
+        selected: null,
+        unity: "",
+        myHeaders: [
+            { key: 'CODI', label: 'Código', sortable: true},
+            { key: 'DES', label: 'Descrição', sortable: true},
+            { key: 'CGRU', label: 'Grupo', sortable: true},
+            { key: 'UN', label: 'Unidade de Medida', sortable: true}
+        ],
+        myItems: [
+            { CODI: '100', DES: 'Turbina HX-40', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '200', DES: 'Turbina HX-35', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '300', DES: 'Turbina HX-55', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '400', DES: 'Fueltech FT-450', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '500', DES: 'Fueltech FT-550', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '600', DES: 'Manometro 60mm Cronomac', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '700', DES: 'Manometro 52mm AutoMeter', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '800', DES: 'Mufla 2E', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '900', DES: 'Mufla 3E', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1000', DES: 'Weber 450', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1100', DES: 'Weber TLDZ', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1200', DES: 'Bicos 80lb', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1300', DES: 'Bicos 120lb', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1400', DES: 'Bobina MI', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1500', DES: 'Módulo SparkPro', CGRU: 'Turbinas', UN: 'PÇ'},
+            { CODI: '1600', DES: 'BoostController', CGRU: 'Turbinas', UN: 'PÇ'}
+        ]
     }
   },
   methods: {
-    goBack(){
-      this.$router.go(-1)
+      goBack(){
+          this.$router.go(-1)
     },
     showModal(){
         this.isModalVisible=true
+        console.log(this.isModalVisible)
     },
     closeModal(){
         this.isModalVisible=false
@@ -62,14 +121,11 @@ export default {
 </script>
 
 <style>
-    /* .tab-itens {
-
-    } */
 
     .mod-itens {
-        height: 80vh;
-        background-color: #ffffff;
-        border-radius: 5px;
+            height: 80vh;
+            background-color: #ffffff;
+            border-radius: 5px;
     } 
 
     #show-itens {
@@ -80,102 +136,126 @@ export default {
         padding: 10px;
     }
 
-    /* #header-itens {
+    .header-modal {
+        font-size: 1.3rem;
+    }
+
+    .body-modal input {
+        padding: 5px;
+    }
+
+    .modal-register input {
+        width: 200px;
+        outline: none;
+    }
+
+    #first-line,
+    #second-line {
         display: flex;
-        justify-content: space-between;
-        width:100%;
+        justify-content: space-around;
+        padding-bottom: 30px;
+    }
+
+    #first-input {
+        border-radius: 5px;
+        text-align: left;
+    }
+
+    #second-input {
+        border-radius: 5px;
+    }
+
+    #group-input {
+        width: 200px;
+    }
+
+    #group-input input {
+        width: 170px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    #group-input button {
+        width: 30px;
+        height: 34px;
+        background-color: #ffffff;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    #group-input button i {
+        font-size: 1rem;
+        display: flex;
         padding: 10px;
-        padding-bottom: 15px;
-        font-size: 25px;
+        align-content: center;
+        justify-content: center;
     }
 
-    #header-itens span {
-        align-content: flex-start;
-        padding-top: 5px;
-    }
-
-    #return {
-        font-size: 1.2rem;
-        align-self: flex-end;
-        border: none;
-        color: #b97676;
-        background-color: #ffffff;
-        padding-bottom: 10px;
+    #unity-select {
+        width: 200px;
+        outline: none;
         border-radius: 5px;
-        transition: .2s;
-        font-size: 1.1rem;
-        cursor: pointer;
+        padding: 5px;
     }
 
-    #return:hover {
-        background-color: #b97676;
-        color: #ffffff;
-    } */
 
-    #session-itens {
-        padding-left: 10px;
-    }
-
-    #button-itens {
-        /* align-items: flex-end; */
-        background-color: #ffffff;
-        color: #1ab486;
-        border: none;
+    #save-itens {
+        color: #127a5b;
         border-radius: 5px;
-        padding: 8px;
+        padding: 5px;
         transition: .2s;
     }
 
-    #button-itens:hover {
+    #save-itens:hover {
         background-color: #1ab486;
-        color: #ffffff;
         transition: .2s;
+        color: #ffffff;
     }
 
-    #view-itens {
-        padding-left: 20px;
-        /* margin-left: 2px; */
-        border: none;
-        background-color: #ffffff;
-        color: #989fbe;
+    #search-box span {
+        width: 100%;
+        display: flex;
+    }
+
+    #search-box input {
+        border: none ;
+        outline: none;
         border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
     }
 
-    #view-itens:hover {
-        background-color: #989fbe;
-        color: #ffffff;
-        transition: .2s;
+    #search-box input:focus {
+        border: none ;
     }
 
-    #edit-itens {
-        border: none;
-        background-color: #ffffff;
-        color: #7c80a0;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
+    .myTab {
+        display: flex;
+        justify-content: space-around;
     }
 
-    #edit-itens:hover {
-        background-color: #7c80a0;
-        color: #ffffff;
-        transition: .2s;
-    }
+        @keyframes slide-in {
+            from { transform: translateY(10px) translateX(0px); opacity: 0}
+            to { transform: translateY(0px) translateX(0px); opacity: 1}
+        }
+    
+        @keyframes slide-out {
+            from { transform: translateY(0px); opacity: 1;}
+            to { transform: translateY(0px) translateX(0px); opacity: 0;}
+        }
+    
+        .slide-enter-active {
+            animation: slide-in .2s ease;
+        }
+    
+        .slide-leave-active {
+            animation: slide-out .2s ease;
+        }
+    
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s
+        }
+    
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
 
-    #print-itens {
-        border: none;
-        background-color: #ffffff;
-        color: #387080;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #print-itens:hover {
-        background-color: #387080;
-        color: #ffffff;
-        transition: .2s;
-    }
 </style>

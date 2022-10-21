@@ -24,6 +24,7 @@ export default {
 </script>
 
 <style>
+
     .select-erp {
         flex: 1;
         position: relative;
