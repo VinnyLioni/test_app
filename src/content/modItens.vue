@@ -3,23 +3,6 @@
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
       <edit-vue @openMyModal="showModal()" />
-        <!-- <div id="session-itens">
-            <button id="button-itens" class="mr-1" @click="showModal">
-                <i class="fas fa-plus pr-1"></i>Cadastrar
-            </button>
-            <button id="edit-itens" class="mr-1" @click="showModal">
-                <i class="fas fa-pen-to-square pr-1"></i>Editar
-            </button>
-            <button id="view-itens" class="mr-1" @click="showModal">
-                <i class="fas fa-eye pr-1"></i>Visualizar
-            </button>
-            <button id="filter-itens" class="mr-1" @click="showModal">
-                <i class="fas fa-filter pr-1"></i>Filtro
-            </button>
-            <button id="print-itens">
-                <i class="fas fa-print pr-1"></i>Imprimir
-            </button>
-        </div> -->
       <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
             <div class="header-modal" slot="header">
@@ -121,8 +104,8 @@ export default {
     }
   },
   methods: {
-    goBack(){
-      this.$router.go(-1)
+      goBack(){
+          this.$router.go(-1)
     },
     showModal(){
         this.isModalVisible=true
@@ -139,26 +122,38 @@ export default {
 
 <style>
 
-    .myTab {
+    .mod-itens {
+            height: 80vh;
+            background-color: #ffffff;
+            border-radius: 5px;
+    } 
+
+    #show-itens {
         display: flex;
-        justify-content: space-around;
-    }
-
-    #save-itens {
-        color: #127a5b;
+        justify-content: space-between;
+        flex-flow: wrap;
         border-radius: 5px;
-        padding: 5px;
-        transition: .2s;
+        padding: 10px;
     }
 
-    #save-itens:hover {
-        background-color: #1ab486;
-        transition: .2s;
-        color: #ffffff;
+    .header-modal {
+        font-size: 1.3rem;
     }
 
     .body-modal input {
         padding: 5px;
+    }
+
+    .modal-register input {
+        width: 200px;
+        outline: none;
+    }
+
+    #first-line,
+    #second-line {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 30px;
     }
 
     #first-input {
@@ -196,10 +191,6 @@ export default {
         justify-content: center;
     }
 
-    .modal-register input {
-        width: 200px
-    }
-
     #unity-select {
         width: 200px;
         outline: none;
@@ -208,32 +199,17 @@ export default {
     }
 
 
-    /* #unity-select option {
-        cursor: pointer;
-    }  */
-
-    .modal-register input {
-        outline: none;
+    #save-itens {
+        color: #127a5b;
+        border-radius: 5px;
+        padding: 5px;
+        transition: .2s;
     }
 
-    /* .first-input {
-        width: 50%;
-    }
-
-    .second-input {
-        width: 50%
-    } */
-
-    #first-line {
-        display: flex;
-        justify-content: space-around;
-        padding-bottom: 30px;
-    }
-    
-    #second-line {
-        display: flex;
-        justify-content: space-around;
-        padding-bottom: 30px;
+    #save-itens:hover {
+        background-color: #1ab486;
+        transition: .2s;
+        color: #ffffff;
     }
 
     #search-box span {
@@ -249,139 +225,37 @@ export default {
 
     #search-box input:focus {
         border: none ;
-        /* border-radius: 5px; */
-    }
-    
-    .header-modal {
-        font-size: 1.3rem;
     }
 
-    /* .tab-itens {
-
-    } */
-
-    @keyframes slide-in {
-        from { transform: translateY(10px) translateX(0px); opacity: 0}
-        to { transform: translateY(0px) translateX(0px); opacity: 1}
-    }
-
-    @keyframes slide-out {
-        from { transform: translateY(0px); opacity: 1;}
-        to { transform: translateY(0px) translateX(0px); opacity: 0;}
-    }
-
-    .slide-enter-active {
-        animation: slide-in .2s ease;
-    }
-
-    .slide-leave-active {
-        animation: slide-out .2s ease;
-    }
-
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s
-    }
-
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
-    }
-    
-    .mod-itens {
-        height: 80vh;
-        background-color: #ffffff;
-        border-radius: 5px;
-    } 
-
-    #show-itens {
+    .myTab {
         display: flex;
-        justify-content: space-between;
-        flex-flow: wrap;
-        border-radius: 5px;
-        padding: 10px;
+        justify-content: space-around;
     }
 
-    #session-itens {
-        display: flex;
-        align-content: flex-start;
-        padding-left: 10px;
-        width: 100%;
-    }
+        @keyframes slide-in {
+            from { transform: translateY(10px) translateX(0px); opacity: 0}
+            to { transform: translateY(0px) translateX(0px); opacity: 1}
+        }
+    
+        @keyframes slide-out {
+            from { transform: translateY(0px); opacity: 1;}
+            to { transform: translateY(0px) translateX(0px); opacity: 0;}
+        }
+    
+        .slide-enter-active {
+            animation: slide-in .2s ease;
+        }
+    
+        .slide-leave-active {
+            animation: slide-out .2s ease;
+        }
+    
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s
+        }
+    
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
+        }
 
-    #button-itens {
-        /* align-items: flex-end; */
-        background-color: #ffffff;
-        color: #1ab486;
-        border: none;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #button-itens:hover {
-        background-color: #1ab486;
-        color: #ffffff;
-        transition: .2s;
-    }
-
-    #view-itens {
-        padding-left: 20px;
-        /* margin-left: 2px; */
-        border: none;
-        background-color: #ffffff;
-        color: #989fbe;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #view-itens:hover {
-        background-color: #989fbe;
-        color: #ffffff;
-        transition: .2s;
-    }
-
-    #edit-itens {
-        border: none;
-        background-color: #ffffff;
-        color: #7c80a0;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #edit-itens:hover {
-        background-color: #7c80a0;
-        color: #ffffff;
-        transition: .2s;
-    }
-
-    #filter-itens {
-        border: none;
-        background-color: #ffffff;
-        color: #4e505e;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #filter-itens:hover {
-        background-color: #4e505e;
-        color: #ffffff;
-        transition: .2s;
-    }
-
-    #print-itens {
-        border: none;
-        background-color: #ffffff;
-        color: #387080;
-        border-radius: 5px;
-        padding: 8px;
-        transition: .2s;
-    }
-
-    #print-itens:hover {
-        background-color: #387080;
-        color: #ffffff;
-        transition: .2s;
-    }
 </style>
