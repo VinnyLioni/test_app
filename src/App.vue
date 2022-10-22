@@ -12,6 +12,12 @@ export default {
   components: { HomeView },
   methods: {
 
+  },
+  created(){
+    this.$http.post('asusu.json', {
+      nome: 'Vinicius',
+      email: 'vinnylioni@gmail.com'
+    }).then(res => console.log(res))
   }
 }
 </script>

@@ -231,31 +231,4 @@ export default {
         display: flex;
         justify-content: space-around;
     }
-
-        @keyframes slide-in {
-            from { transform: translateY(10px) translateX(0px); opacity: 0}
-            to { transform: translateY(0px) translateX(0px); opacity: 1}
-        }
-    
-        @keyframes slide-out {
-            from { transform: translateY(0px); opacity: 1;}
-            to { transform: translateY(0px) translateX(0px); opacity: 0;}
-        }
-    
-        .slide-enter-active {
-            animation: slide-in .2s ease;
-        }
-    
-        .slide-leave-active {
-            animation: slide-out .2s ease;
-        }
-    
-        .fade-enter-active, .fade-leave-active {
-            transition: opacity .5s
-        }
-    
-        .fade-enter, .fade-leave-to {
-            opacity: 0;
-        }
-
 </style>

@@ -6,6 +6,8 @@ import MainContentVue from "../components/MainContent";
 import modItens from "../content/modItens";
 import modClient from "../content/modClient";
 import ModalVue from "../components/ModalVue";
+import asusuVue from "../content/asusuVue";
+import ConfigVue from "../components/ConfigVue"
 
 Vue.use(VueRouter);
 
@@ -30,6 +32,11 @@ const routes = [
     component: ContentVue,
   },
   {
+    path: "/config",
+    name: "config",
+    component: ConfigVue,
+  },
+  {
     path: "/itens",
     name: "itens",
     component: modItens,
@@ -44,6 +51,11 @@ const routes = [
     name: "clients",
     component: modClient,
   },
+  {
+    path: "/users",
+    name: "asusu",
+    component: asusuVue
+  }
 ];
 
 const router = new VueRouter({

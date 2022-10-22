@@ -44,7 +44,7 @@
                 <i class="fas fa-chart-line pr-2 pt-1"></i>
                 Relatórios
             </li>
-            <li id="module">
+            <li id="module" @click="goToConfig()">
                 <i class="fas fa-gears pr-2 pt-1"></i>
                 Configurações
             </li>
@@ -82,6 +82,11 @@ export default {
             this.$router.push(
                 '/home'
             ).catch(()=>{})
+        },
+        goToConfig(){
+            this.$router.push(
+                '/config'
+            ).catch(() => {})
         }
         
     },

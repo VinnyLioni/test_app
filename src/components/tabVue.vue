@@ -28,6 +28,10 @@ export default {
 
 <style>
 
+    .b-table-sticky-header {
+        max-height: 470px;
+    }
+
     .table.b-table > thead > tr > [aria-sort=none], .table.b-table > tfoot > tr > [aria-sort=none] {
         background-image: none;
         transition: .3s;
@@ -45,6 +49,7 @@ export default {
     .table-vue {
         cursor: pointer;
         width: 99%;
+        /* height: 1vh; */
     }
 
     [role=columnheader] {
