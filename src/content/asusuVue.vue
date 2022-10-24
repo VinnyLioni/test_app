@@ -48,25 +48,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <b-list-group>
-                        <b-list-group-item v-for="(user, id) in user" :key="id">
-                            <strong>Nome: </strong>{{ user.nome }}<br>
-                            <strong>Email: </strong>{{ user.email }}<br>
-                            <strong>ID: </strong>{{ id }}
-                        </b-list-group-item>
-                    </b-list-group> -->
                 </main>
                 <footer slot="footer">
                     <div class="footer-modal">
                         <button @click="saveUser" id="save-users"><i class="fas fa-upload"></i> Salvar</button>
-                        <!-- <button @click="loadUser" id="load-users"><i class="fas fa-download"></i> Carregar</button> -->
                     </div>
                 </footer>
             </modal-vue>
         </transition>
     </div>
     <div class="myTab">
-        <table-vue :headers="myHeaders" :items="user"></table-vue>
+        <table-vue :headers="myHeaders" :items="myUsers">
+
+        </table-vue>
     </div>
   </div>
 </template>
@@ -84,7 +78,7 @@ export default {
         return {
             isModalVisible: false,
             user: {
-                codi: '',
+                key: '',
                 nome: '',
                 email: '',
                 st: ''
@@ -95,10 +89,10 @@ export default {
                 { key: 'email', label: 'Email', sortable: true },
                 { key: 'st', label: 'Situação', sortable: true },
             ],
-            // myUsers: [
-            //     { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
-            //     { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
-            // ]
+            myUsers: [
+                { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
+                { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
+            ]
         }
     },
     methods: {
@@ -123,7 +117,7 @@ export default {
                 this.user = res.data
                 console.log(this.user)
             })
-        }
+        },
     }
 }
 </script>

@@ -2,20 +2,6 @@
     <div class="table-vue">
         <b-table sticky-header hover :fields="headers" :items="items">
         </b-table>
-        <!-- <div class="table-wrapper">
-            <table class="fl-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
     </div>
 </template>
 
