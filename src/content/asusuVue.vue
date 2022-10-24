@@ -118,6 +118,12 @@ export default {
                 console.log(this.user)
             })
         },
+    },
+    mounted(){
+        this.$http.get('asusu.json', this.user)
+        .then(() => {
+            this.user.nome = asusu.nome
+        })
     }
 }
 </script>
