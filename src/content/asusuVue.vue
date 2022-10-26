@@ -78,7 +78,7 @@ export default {
         return {
             isModalVisible: false,
             user: {
-                key: '',
+                codi: '',
                 nome: '',
                 email: '',
                 st: ''
@@ -90,8 +90,9 @@ export default {
                 { key: 'st', label: 'Situação', sortable: true },
             ],
             myUsers: [
-                { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
-                { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
+                {}
+                // { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
+                // { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
             ]
         }
     },
@@ -121,8 +122,9 @@ export default {
     },
     mounted(){
         this.$http.get('asusu.json', this.user)
-        .then(() => {
-            this.user.nome = asusu.nome
+        .then(resp => {
+            this.user = resp.data
+            this.myUsers = this.user
         })
     }
 }
