@@ -106,19 +106,19 @@ export default {
         closeModal(){
             this.isModalVisible=false
         },
-        saveUser(){
-            this.$http.post('asusu.json', this.user)
-                .then(() => {
-                    this.user.nome = ''
-                    this.user.email = ''
-                })
-        },
-        loadUser(){
-            this.$http('asusu.json', this.user).then(res => {
-                this.user = res.data
-                console.log(this.user)
-            })
-        },
+        // saveUser(){
+        //     this.$http.post('asusu.json', this.user)
+        //         .then(() => {
+        //             this.user.nome = ''
+        //             this.user.email = ''
+        //         })
+        // },
+        // loadUser(){
+        //     this.$http('asusu.json', this.user).then(res => {
+        //         this.user = res.data
+        //         console.log(this.user)
+        //     })
+        // },
     },
     mounted(){
         this.$http.get('asusu.json', this.user)

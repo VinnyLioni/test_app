@@ -8,7 +8,9 @@
         <div id="select-border">
             <div id="select-session">
                 <selection-erp style="cursor: pointer" title="Usuários" 
-                icon="ffas fa-users pt-1 pr-2" @getGoTo="goToUsers()"/>
+                icon="fas fa-users pt-1 pr-2" @getGoTo="goToUsers()"/>
+                <selection-erp style="cursor: pointer" title="Learning" 
+                icon="fas fa-book pt-1 pr-2" @getGoTo="goToLearning()"/>
             </div>
             <hr>
             
@@ -27,6 +29,11 @@ export default {
         goToUsers(){
             this.$router.push(
                 '/users'
+            )
+        },
+        goToLearning(){
+            this.$router.push(
+                '/learning'
             )
         },
         goBack(){

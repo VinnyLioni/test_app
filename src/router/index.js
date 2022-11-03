@@ -7,7 +7,8 @@ import modItens from "../content/modItens";
 import modClient from "../content/modClient";
 import ModalVue from "../components/ModalVue";
 import asusuVue from "../content/asusuVue";
-import ConfigVue from "../components/ConfigVue"
+import LearningVue from "../content/Learning";
+import ConfigVue from "../components/ConfigVue";
 
 Vue.use(VueRouter);
 
@@ -54,8 +55,13 @@ const routes = [
   {
     path: "/users",
     name: "asusu",
-    component: asusuVue
-  }
+    component: asusuVue,
+  },
+  {
+    path: "/learning",
+    name: "learning",
+    component: LearningVue,
+  },
 ];
 
 const router = new VueRouter({
