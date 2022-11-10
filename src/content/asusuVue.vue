@@ -77,12 +77,8 @@ export default {
     data(){
         return {
             isModalVisible: false,
-            user: {
-                codi: '',
-                nome: '',
-                email: '',
-                st: ''
-            },
+            users: [],
+            user: {},
             myHeaders: [
                 { key: 'codi', label: 'Código', sortable: true },
                 { key: 'nome', label: 'Nome', sortable: true },
@@ -90,7 +86,6 @@ export default {
                 { key: 'st', label: 'Situação', sortable: true },
             ],
             myUsers: [
-                {}
                 // { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
                 // { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
             ]
@@ -114,19 +109,14 @@ export default {
                 })
         },
         loadUser(){
-            this.$http('asusu.json', this.user).then(res => {
-                this.user = res.data
-                console.log(this.user)
+            this.$http('asusu.json').then(res => {
+                this.myUsers = res.data
+                console.log(this.myUsers)
             })
         },
     },
-    created(){
-        this.$http.get('asusu.json', this.user)
-        .then(resp => {
-            this.user = resp.data
-            this.myUsers = this.user
-        })
-        console.log(this.user)
+    mounted(){
+        this.loadUser()
     }
 }
 </script>

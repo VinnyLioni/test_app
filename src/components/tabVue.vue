@@ -8,7 +8,7 @@
 <script>
 export default {
     name: 'TableVue',
-    props: [ 'headers', 'items']
+    props: [ 'headers', 'items'],
 }
 </script>
 

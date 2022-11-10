@@ -1,7 +1,7 @@
 <template>
     <div class="learning-vue">
         <div id="show-learning">
-            <header-itens title="Area para Testes" icon="fas fa-hammer pr-1">]</header-itens>
+            <header-itens title="Area para Testes" icon="fas fa-hammer pr-1" @backRouter="goBack"></header-itens>
             <div class="first-area">
                 <div class="my-card">
                     <div class="my-form">
@@ -21,13 +21,7 @@
                     <button class="save-button mr-2" @click.prevent="saveUser">Salvar</button>
                     <button class="load-button" @click="loadUser">Carregar</button>
                     <hr>
-                    <b-list-group>
-                        <b-list-group-item v-for="(usuario, id) in usuarios" :key="id">
-                            <strong>Nome: </strong>{{ usuario.nome }}<br>
-                            <strong>E-mail: </strong>{{ usuario.email }}<br>
-                            <strong>ID: </strong>{{ id }}
-                        </b-list-group-item>
-                    </b-list-group>
+                    <tab-vue :headers="headers"/>
                 </div>
             </div>
         </div>
@@ -36,17 +30,20 @@
 
 <script>
 import headerItens from '../components/headerItens.vue'
+import tabVue from '../components/tabVue.vue'
 
 export default {
     name: 'LearningVue',
-    components: { headerItens },
+    components: { headerItens, tabVue },
     data(){
         return {
             usuarios: [],
-            usuario: {
-                nome: '',
-                email: ''
-            }
+            usuario: {},
+            headers: [
+                { key: 'id', label: 'Código', sortable: true},
+                { key: 'nome', label: 'Nome', sortable: true},
+                { key: 'email', label: 'E-mail', sortable: true},
+            ]
         }
     },
     methods: {
@@ -57,18 +54,18 @@ export default {
                 this.usuario.email = ''
             })
         },
-        loadUser(){
+        loadUsers(){
             this.$http('learning.json').then(res => {
                 this.usuarios = res.data
                 console.log(this.usuarios)
             })
+        },
+        goBack(){
+            this.$router.go(-1)
         }
     },
-    created(){
-        // this.$http.post('learning.json',{
-        //     nome: 'Teste',
-        //     email: 'teste@gmail.com',
-        //     }).then(res => console.log(res))
+    mounted(){
+        this.loadUsers()
     }
 }
 </script>
