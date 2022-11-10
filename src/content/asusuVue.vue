@@ -85,10 +85,10 @@ export default {
                 { key: 'email', label: 'Email', sortable: true },
                 { key: 'st', label: 'Situação', sortable: true },
             ],
-            myUsers: [
+            myUsers: {}
                 // { codi: '10', nome: 'Vinicius', email:'vinnylioni@gmail.com', password: 'Vini001*', st: 'Ativo', dtcad: '22102022'},
                 // { codi: '20', nome: 'Mikhaele', email:'ogedamika@gmail.com', password: '050115', st: 'Ativo', dtcad: '22102022'},
-            ]
+
         }
     },
     methods: {
@@ -110,8 +110,10 @@ export default {
         },
         loadUser(){
             this.$http('asusu.json').then(res => {
-                this.myUsers = res.data
-                console.log(this.myUsers)
+                const obj = Object.keys(res.data).map( key => {
+                    return {id: key, ...res.data[key]}
+                })
+                this.myUsers = obj
             })
         },
     },
