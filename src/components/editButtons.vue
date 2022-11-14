@@ -1,19 +1,22 @@
 <template>
     <div class="edit-vue">
-            <button id="button-itens" class="mr-1" @click="openModel">
+            <button id="button-itens" class="mr-1" @click="openModel1">
                 <i class="fas fa-plus pr-1"></i>Cadastrar
             </button>
-            <button id="edit-itens" class="mr-1" @click="openModel">
+            <button id="edit-itens" class="mr-1" @click="openModel2">
                 <i class="fas fa-pen-to-square pr-1"></i>Editar
             </button>
-            <button id="view-itens" class="mr-1" @click="openModel">
+            <button id="view-itens" class="mr-1" @click="openModel1">
                 <i class="fas fa-eye pr-1"></i>Visualizar
             </button>
-            <button id="filter-itens" class="mr-1" @click="openModel">
+            <button id="filter-itens" class="mr-1" @click="openModel1">
                 <i class="fas fa-filter pr-1"></i>Filtro
             </button>
             <button id="print-itens">
                 <i class="fas fa-print pr-1"></i>Imprimir
+            </button>
+            <button id="refresh-itens" @click="refreshItem()">
+                <i class="fas fa-retweet pr-1"></i>Atualizar
             </button>
     </div>
 </template>
@@ -22,8 +25,14 @@
 export default {
     name: 'editVue',
     methods: {
-        openModel(){
-            this.$emit("openMyModal")
+        openModel1(){
+            this.$emit("openMyModal1")
+        },
+        openModel2(){
+            this.$emit("openMyModal2")
+        },
+        refreshItem(){
+            window.location.reload()
         }
     }
 }
@@ -38,7 +47,7 @@ export default {
         width: 100%;
     }
 
-    #button-itens {
+    #button-itens, #refresh-itens {
         /* align-items: flex-end; */
         background-color: #ffffff;
         color: #1ab486;
@@ -48,7 +57,7 @@ export default {
         transition: .2s;
     }
 
-    #button-itens:hover {
+    #button-itens:hover, #refresh-itens:hover {
         background-color: #1ab486;
         color: #ffffff;
         transition: .2s;

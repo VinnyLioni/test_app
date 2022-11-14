@@ -58,7 +58,7 @@
         </transition>
     </div>
     <div class="myTab">
-        <table-vue :headers="myHeaders" :items="myUsers">
+        <table-vue :headers="myHeaders" :MyItens="myUsers">
 
         </table-vue>
     </div>
@@ -77,7 +77,7 @@ export default {
     data(){
         return {
             isModalVisible: false,
-            users: [],
+            // users: [],
             user: {},
             myHeaders: [
                 { key: 'codi', label: 'Código', sortable: true },
@@ -114,6 +114,7 @@ export default {
                     return {id: key, ...res.data[key]}
                 })
                 this.myUsers = obj
+                console.log(this.myUsers)
             })
         },
     },

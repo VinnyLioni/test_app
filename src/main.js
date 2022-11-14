@@ -7,8 +7,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./assets/tailwind.css";
-import "./plugins/axios"
-import "./plugins/transitionsMk.css"
+import "./plugins/axios";
+import "./plugins/transitionsMk.css";
+import "./css/table.css";
 
 Vue.config.productionTip = false;
 

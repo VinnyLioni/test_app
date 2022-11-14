@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     isMenuVisible: false,
     // isModuleSelected: false,
-    IsModalVisible: false
+    IsModalVisible: false,
+    IsSelected: false,
   },
   getters: {},
   mutations: {
@@ -21,12 +22,20 @@ export default new Vuex.Store({
     },
     toggleModal(state, isVisible) {
       if (isVisible === undefined) {
-        state.IsModalVisible = !state.IsModalVisible
+        state.IsModalVisible = !state.IsModalVisible;
       } else {
-        state.IsModalVisible = isVisible
+        state.IsModalVisible = isVisible;
       }
-      console.log("toggleModal = " + state.IsModalVisible)
-    }
+      console.log("toggleModal = " + state.IsModalVisible);
+    },
+    // selectItem(state, isSelected) {
+    //   if (isSelected === undefined) {
+    //     state.IsSelected = !state.IsSelected;
+    //   } else {
+    //     state.IsSelected = isSelected;
+    //   }
+    //   console.log("selectItem = " + state.IsSelected);
+    // },
     // selectModule(state, isSelected) {
     //   if (isSelected === undefined) {
     //     state.isModuleSelected = !state.isModuleSelected;

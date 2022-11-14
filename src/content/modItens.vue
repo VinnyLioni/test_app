@@ -2,7 +2,7 @@
   <div class="mod-itens">
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
-      <edit-vue @openMyModal="showModal()" />
+      <edit-vue @openMyModal1="showModal()" @openMyModal2="showEditModal()"/>
       <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
             <div class="header-modal" slot="header">
@@ -15,12 +15,12 @@
                         <div class="first-input">
                             <label>Descrição</label>
                             <br>
-                            <input type="text" id="first-input">
+                            <input type="text" id="first-input" v-model="item.des">
                         </div>
                         <div class="second-input">
                             <label>Descrição Completa</label>
                             <br>
-                            <input type="text" id="second-input">
+                            <input type="text" id="second-input" v-model="item.des2">
                         </div>
                     </div>
                     <div id="second-line">
@@ -28,14 +28,14 @@
                             <label>Grupo de Item</label>
                             <br>
                             <div id="group-input">
-                                <input type="text">
+                                <input type="text" v-model="item.gru">
                                 <button><i class="fas fa-bars"></i></button>
                             </div>
                         </div>
                         <div class="second-input">
                             <label for="units">Unidade de Medida</label>
                             <br>
-                            <select name="unit-select" id="unity-select">
+                            <select name="unit-select" id="unity-select" v-model="item.un">
                                 <option value="" disabled>Selecione o Controle</option>
                                 <option value="UN">Unidade</option>
                                 <option value="CX">Caixa</option>
@@ -50,15 +50,40 @@
             </main>
             <footer slot="footer">
                 <div class="footer-modal">
-                    <button id="save-itens"><i class="fas fa-upload"></i> Salvar</button>
+                    <button id="save-itens" v-if="mode === 'save'"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button>
+                    <button id="save-itens" v-if="mode === 'edit'"  @click="editItem"><i class="fas fa-upload"></i> Atualizar</button>
                 </div>
             </footer>
         </modal-vue>
       </transition>
     </div>
     <div class="myTab">
-        <table-vue :headers="myHeaders" :items="myItems">
-        </table-vue>
+        <div class="table-vue">
+            <b-table sticky-header hover :fields="myHeaders" :items="myItems">
+                <template #cell(selected)="data">
+                    <b-btn variant="primary" @click="selectItem(data.item)" class="span-selected">
+                        <i class="fas fa-circle-dot"></i>
+                    </b-btn>
+                    <!-- <button @click="selectItem(data.item)"></button> -->
+                </template>
+            </b-table>
+            <!-- <b-table sticky-header hover :fields="myHeaders" :items="myItems" 
+            responsive="sm" ref="selectableTable" selectable :select-mode="selectMode" @row-selected="onRowSelected">
+                <template #cell(selected)="{ rowSelected }">
+                    <template v-if="rowSelected">
+                        <span aria-hidden="true">&check;</span>
+                    </template>
+                    <template v-else>
+                        <span aria-hidden="true">&nbsp;</span>
+                        <span class="sr-only">Not Selected</span>
+                    </template>
+                </template>
+            </b-table>
+            <p>
+                selecionada:<br>
+                {{ item }}
+            </p> -->
+        </div>
     </div>
   </div>
 </template>
@@ -66,61 +91,111 @@
 <script>
 import headerItens from '../components/headerItens.vue'
 import ModalVue from '../components/ModalVue.vue'
-import TableVue from '../components/tabVue.vue'
+// import TableVue from '../components/tabVue.vue'
 import editVue from '../components/editButtons.vue'
 
 export default {
   name: "modItens",
-  components: { headerItens,ModalVue,TableVue,editVue },
+  components: { headerItens,ModalVue,editVue },
   data(){
     return {
         isModalVisible: false,
-        selected: null,
+        selectMode: 'single',
         unity: "",
+        id: null,
         myHeaders: [
-            { key: 'CODI', label: 'Código', sortable: true},
-            { key: 'DES', label: 'Descrição', sortable: true},
-            { key: 'CGRU', label: 'Grupo', sortable: true},
-            { key: 'UN', label: 'Unidade de Medida', sortable: true}
+            { key: 'selected', label: ''},
+            { key: 'id', label: 'Código', sortable: true},
+            { key: 'des', label: 'Descrição', sortable: true},
+            { key: 'des2', label: 'Descrição Completa', sortable: true},
+            { key: 'gru', label: 'Grupo', sortable: true},
+            { key: 'un', label: 'Unidade de Medida', sortable: true}
         ],
-        myItems: [
-            { CODI: '100', DES: 'Turbina HX-40', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '200', DES: 'Turbina HX-35', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '300', DES: 'Turbina HX-55', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '400', DES: 'Fueltech FT-450', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '500', DES: 'Fueltech FT-550', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '600', DES: 'Manometro 60mm Cronomac', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '700', DES: 'Manometro 52mm AutoMeter', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '800', DES: 'Mufla 2E', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '900', DES: 'Mufla 3E', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1000', DES: 'Weber 450', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1100', DES: 'Weber TLDZ', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1200', DES: 'Bicos 80lb', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1300', DES: 'Bicos 120lb', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1400', DES: 'Bobina MI', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1500', DES: 'Módulo SparkPro', CGRU: 'Turbinas', UN: 'PÇ'},
-            { CODI: '1600', DES: 'BoostController', CGRU: 'Turbinas', UN: 'PÇ'}
-        ]
+        item: {},
+        selected: false,
+        myItems: {}
     }
   },
   methods: {
-      goBack(){
+    cleanUser(){
+        this.item=''
+        this.id=null
+    },
+    goBack(){
           this.$router.go(-1)
     },
-    showModal(){
+    showModal(mode='save'){
         this.isModalVisible=true
+        this.mode=mode
+        console.log(this.isModalVisible)
+    },
+    showEditModal(mode='edit'){
+        this.isModalVisible=true
+        this.mode=mode
         console.log(this.isModalVisible)
     },
     closeModal(){
         this.isModalVisible=false
         console.log(this.isModalVisible)
+        this.item = ''
+    },
+    saveItem(){
+        this.$http.post('mpalmo.json', this.item)
+            .then(() => {
+                this.item.des = ''
+                this.item.des2 = ''
+                this.item.gru = ''
+                this.item.un = 'UN'
+            })
+            console.log(this.item)
+    },
+    editItem(){
+        this.$http.patch('mpalmo.json', this.item)
+            .then(() => {
+                this.item.des = ''
+                this.item.des2 = ''
+                this.item.gru = ''
+                this.item.un = 'UN'
+            })
+    },
+    loadItem(id){
+        this.id=id
+        this.$http('mpalmo.json').then(res => {
+            const obj = Object.keys(res.data).map(key => {
+                return {id: key, ...res.data[key]}
+            })
+            this.myItems = obj
+        })
+    },
+    // onRowSelected(items){
+    //     this.item=items
+    // },
+    selectItem(item,id,selected=true){
+        this.id = id
+        this.item={...item}
+        this.selected=selected
+        console.log(this.id)
     }
+  },
+  mounted(){
+    this.loadItem()
   }
 };
 
 </script>
 
 <style>
+
+    .btn-primary {
+        color: #6a6886;
+        border: none
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        color: #7e76d1;
+        background: transparent;
+    }
 
     .mod-itens {
             height: 80vh;
@@ -230,5 +305,6 @@ export default {
     .myTab {
         display: flex;
         justify-content: space-around;
+        height: 1vh;
     }
 </style>

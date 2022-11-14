@@ -14,10 +14,10 @@ export default {
 
   },
   created(){
-    this.$http.post('asusu.json', {
-      nome: 'Vinicius',
-      email: 'vinnylioni@gmail.com'
-    }).then(res => console.log(res))
+    // this.$http.post('asusu.json', {
+    //   nome: 'Vinicius',
+    //   email: 'vinnylioni@gmail.com'
+    // }).then(res => console.log(res))
   }
 }
 </script>
