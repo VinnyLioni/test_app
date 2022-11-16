@@ -11,6 +11,8 @@
                 icon="fas fa-users pt-1 pr-2" @getGoTo="goToUsers()"/>
                 <selection-erp style="cursor: pointer" title="Learning" 
                 icon="fas fa-book pt-1 pr-2" @getGoTo="goToLearning()"/>
+                <selection-erp style="cursor: pointer" title="Learning-FireBase" 
+                icon="fas fa-book pt-1 pr-2" @getGoTo="goToLearning2()"/>
             </div>
             <hr>
             
@@ -34,6 +36,11 @@ export default {
         goToLearning(){
             this.$router.push(
                 '/learning'
+            )
+        },
+        goToLearning2(){
+            this.$router.push(
+                '/learning2'
             )
         },
         goBack(){

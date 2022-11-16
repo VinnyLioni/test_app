@@ -101,6 +101,7 @@ export default {
     return {
         isModalVisible: false,
         selectMode: 'single',
+        finalUrl: '',
         unity: "",
         id: null,
         myHeaders: [
@@ -150,7 +151,7 @@ export default {
             console.log(this.item)
     },
     editItem(){
-        this.$http.patch('mpalmo.json', this.item)
+        this.$http.put(this.finalUrl)
             .then(() => {
                 this.item.des = ''
                 this.item.des2 = ''
@@ -166,15 +167,24 @@ export default {
             })
             this.myItems = obj
         })
+        // this.$http('mpalmo.json').then(res => {
+        //     this.myItems = res.data
+        // })
     },
     // onRowSelected(items){
     //     this.item=items
     // },
-    selectItem(item,id,selected=true){
-        this.id = id
-        this.item={...item}
-        this.selected=selected
-        console.log(this.id)
+    // selectItem(item,id,selected=true){
+    //     this.id = id
+    //     this.item={...item}
+    //     this.selected=selected
+    //     console.log(id)
+    // }
+    selectItem(id){
+        this.item = id
+        this.id = this.item.id
+        this.finalUrl = `/mpalmo/${this.id}`
+        console.log(this.finalUrl)
     }
   },
   mounted(){

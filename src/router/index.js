@@ -9,6 +9,7 @@ import ModalVue from "../components/ModalVue";
 import asusuVue from "../content/asusuVue";
 import LearningVue from "../content/Learning";
 import ConfigVue from "../components/ConfigVue";
+import LearningFirebase from "../content/Learning2";
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,11 @@ const routes = [
     path: "/learning",
     name: "learning",
     component: LearningVue,
+  },
+  {
+    path: "/learning2",
+    name: "learning2",
+    component: LearningFirebase,
   },
 ];
 
