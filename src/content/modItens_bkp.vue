@@ -10,7 +10,7 @@
             </div>
             <main class="body-modal" slot="body">
                 <div class="modal-register">
-                    <input type="hidden" id="codi-item" v-model="item.selected">
+                    <input type="hidden" id="codi-item">
                     <div id="first-line">
                         <div class="first-input">
                             <label>Descrição</label>
@@ -50,40 +50,40 @@
             </main>
             <footer slot="footer">
                 <div class="footer-modal">
-                    <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-upload"></i> Excluir</button>
-                    <!-- <button id="save-itens"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button> -->
-                </div>
-            </footer>
-            <footer slot="footer">
-                <div class="footer-modal">
-                    <!-- <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-upload"></i> Excluir</button> -->
-                    <button id="save-itens"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button>
+                    <button id="save-itens" v-if="mode === 'save'"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button>
+                    <button id="save-itens" v-if="mode === 'edit'"  @click="editItem"><i class="fas fa-upload"></i> Atualizar</button>
                 </div>
             </footer>
         </modal-vue>
       </transition>
     </div>
-    <div class="table-itens">
-        <table class="table">
-            <thead>
-                <tr class="table-header">
-                    <th scope="col">Código</th>
-                    <th scope="col">Descrição</th>
-                    <th scope="col">Descrição Completa</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">UN.</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr :class="item.selected ? 'active' : ''" class="table-row" v-for="(item,id) in myItems" :key="id" @click="selectItem(id)">
-                    <th scope="row">{{ item.selected }}</th>
-                    <td scope="row">{{ item.des  }}</td>
-                    <td scope="row">{{ item.des2  }}</td>
-                    <td scope="row">{{ item.gru  }}</td>
-                    <td scope="row">{{ item.un }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="myTab">
+        <div class="table-vue">
+            <b-table sticky-header hover :fields="myHeaders" :items="myItems">
+                <template #cell(selected)="data">
+                    <b-btn variant="primary" @click="selectItem(data.item)" class="span-selected">
+                        <i class="fas fa-circle-dot"></i>
+                    </b-btn>
+                    <!-- <button @click="selectItem(data.item)"></button> -->
+                </template>
+            </b-table>
+            <!-- <b-table sticky-header hover :fields="myHeaders" :items="myItems" 
+            responsive="sm" ref="selectableTable" selectable :select-mode="selectMode" @row-selected="onRowSelected">
+                <template #cell(selected)="{ rowSelected }">
+                    <template v-if="rowSelected">
+                        <span aria-hidden="true">&check;</span>
+                    </template>
+                    <template v-else>
+                        <span aria-hidden="true">&nbsp;</span>
+                        <span class="sr-only">Not Selected</span>
+                    </template>
+                </template>
+            </b-table>
+            <p>
+                selecionada:<br>
+                {{ item }}
+            </p> -->
+        </div>
     </div>
   </div>
 </template>
@@ -93,45 +93,41 @@ import headerItens from '../components/headerItens.vue'
 import ModalVue from '../components/ModalVue.vue'
 // import TableVue from '../components/tabVue.vue'
 import editVue from '../components/editButtons.vue'
-import { mapState } from 'vuex'
 
 export default {
   name: "modItens",
   components: { headerItens,ModalVue,editVue },
-  computed: mapState(['IsItemSelected']),
   data(){
     return {
         isModalVisible: false,
-        mode: 'save',
+        selectMode: 'single',
         finalUrl: '',
         unity: "",
         id: null,
+        myHeaders: [
+            { key: 'selected', label: ''},
+            { key: 'id', label: 'Código', sortable: true},
+            { key: 'des', label: 'Descrição', sortable: true},
+            { key: 'des2', label: 'Descrição Completa', sortable: true},
+            { key: 'gru', label: 'Grupo', sortable: true},
+            { key: 'un', label: 'Unidade de Medida', sortable: true}
+        ],
+        item: {},
         selected: false,
-        item: {
-            des: null,
-            des2: null,
-            gru: null,
-            un: null,
-            selected: false
-        },
-        selectedClass: 'inative',
         myItems: {}
     }
   },
   methods: {
-    limpar(){
-        this.id = null
-        this.item.des = null
-        this.item.des2 = null
-        this.item.gru = null
-        this.item.un = null
-        this.item.selected=false
+    cleanUser(){
+        this.item=''
+        this.id=null
     },
     goBack(){
           this.$router.go(-1)
     },
-    showModal(){
+    showModal(mode='save'){
         this.isModalVisible=true
+        this.mode=mode
         console.log(this.isModalVisible)
     },
     showEditModal(mode='edit'){
@@ -141,52 +137,54 @@ export default {
     },
     closeModal(){
         this.isModalVisible=false
-        this.limpar()
         console.log(this.isModalVisible)
-    },
-    // loadItem(){
-    //     this.$http('mpalmo.json').then(res => {
-    //         this.myItems = res.data
-    //     })
-    //     console.log(this.myItems)
-    loadItem(id){
-    this.id=id
-    this.$http('mpalmo.json').then(res => {
-        const obj = Object.keys(res.data).map(key => {
-            return {id: key, ...res.data[key]}
-        })
-        this.myItems = obj.map(obj => {
-            return { ...obj, selected: false }
-        })
-    })
+        this.item = ''
     },
     saveItem(){
-        const metodo = this.id ? 'put' : 'post'
-        const finalUrl = this.id ? `/${this.id}.json` : '.json'
-        this.$http[metodo](`/mpalmo${finalUrl}`, this.item)
+        this.$http.post('mpalmo.json', this.item)
             .then(() => {
-                this.limpar()
-                this.loadItem()
-                this.closeModal()
+                this.item.des = ''
+                this.item.des2 = ''
+                this.item.gru = ''
+                this.item.un = 'UN'
+            })
+            console.log(this.item)
+    },
+    editItem(){
+        this.$http.put(this.finalUrl)
+            .then(() => {
+                this.item.des = ''
+                this.item.des2 = ''
+                this.item.gru = ''
+                this.item.un = 'UN'
             })
     },
-    selectItem(id, mode='edit'){
-        this.id = id
-        this.item = { ...this.myItems[id] }
-        this.myItems[id].selected = !this.myItems[id].selected
-        this.mode = mode
-        
-    },
-    deleteItem(){
-        const metodo = 'delete'
-        const finalUrl = `/${this.id}.json`
-        this.$http[metodo](`/mpalmo${finalUrl}`)
-            .then(() => {
-                this.limpar()
-                this.loadItem()
-                this.closeModal()
+    loadItem(id){
+        this.id=id
+        this.$http('mpalmo.json').then(res => {
+            const obj = Object.keys(res.data).map(key => {
+                return {id: key, ...res.data[key]}
             })
-            console.log(`/mpalmo${finalUrl}`)
+            this.myItems = obj
+        })
+        // this.$http('mpalmo.json').then(res => {
+        //     this.myItems = res.data
+        // })
+    },
+    // onRowSelected(items){
+    //     this.item=items
+    // },
+    // selectItem(item,id,selected=true){
+    //     this.id = id
+    //     this.item={...item}
+    //     this.selected=selected
+    //     console.log(id)
+    // }
+    selectItem(id){
+        this.item = id
+        this.id = this.item.id
+        this.finalUrl = `/mpalmo/${this.id}`
+        console.log(this.finalUrl)
     }
   },
   mounted(){
@@ -197,36 +195,6 @@ export default {
 </script>
 
 <style>
-
-    .table-header, th[scope="col"] {
-        background-color: #7e76d1;
-        color: #ffffff;
-        cursor: pointer;
-        transition: .2s;
-    }
-
-    th[scope="col"]:hover {
-        background-color: #6e67b4;
-        transition: .2s;
-    }
-
-    tbody tr {
-        background-color: #f6f6f6;
-    }
-
-    .table-row {
-        transition: .2s;
-    }
-
-    .table-row:hover {
-        cursor: pointer;
-        background-color: #d6d6d6;
-        transition: .2s
-    }
-
-    .active {
-        background-color: #d6d6d6;
-    }
 
     .btn-primary {
         color: #6a6886;
@@ -344,4 +312,9 @@ export default {
         border: none ;
     }
 
+    .myTab {
+        display: flex;
+        justify-content: space-around;
+        height: 1vh;
+    }
 </style>

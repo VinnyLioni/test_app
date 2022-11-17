@@ -76,6 +76,10 @@ export default {
     transition: all .3s ease;
   }
 
+  [slot="footer"] {
+    display: flex;
+  }
+
   .modal-header {
     display: flex;
     /* justify-content: center; */
