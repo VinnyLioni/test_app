@@ -2,7 +2,7 @@
   <div class="mod-itens">
     <div id="show-itens">
       <header-itens title="Cadastro de Itens" icon="fas fa-shapes pr-2" @backRouter="goBack()"/>  
-      <edit-vue @openMyModal1="showModal()" @openMyModal2="showEditModal()"/>
+      <edit-vue @openMyModal1="showModal()" @openMyModal2="showEditModal()" @reloadPage="refreshPage()"/>
       <transition name="slide">
         <modal-vue v-if="isModalVisible" @closeMd="closeModal()">
             <div class="header-modal" slot="header">
@@ -50,14 +50,9 @@
             </main>
             <footer slot="footer">
                 <div class="footer-modal">
-                    <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-upload"></i> Excluir</button>
-                    <!-- <button id="save-itens"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button> -->
-                </div>
-            </footer>
-            <footer slot="footer">
-                <div class="footer-modal">
-                    <!-- <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-upload"></i> Excluir</button> -->
-                    <button id="save-itens"  @click="saveItem"><i class="fas fa-upload"></i> Salvar</button>
+                    <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-trash-can"></i> Excluir</button>
+                    <button id="save-itens"  @click="editItem" v-if="mode==='edit'"><i class="fas fa-upload ml-2"></i> Atualizar</button>
+                    <button id="save-itens"  @click="saveItem" v-if="mode==='save'"><i class="fas fa-upload"></i> Salvar</button>
                 </div>
             </footer>
         </modal-vue>
@@ -76,7 +71,7 @@
             </thead>
             <tbody>
                 <tr :class="item.selected ? 'active' : ''" class="table-row" v-for="(item,id) in myItems" :key="id" @click="selectItem(id)">
-                    <th scope="row">{{ item.selected }}</th>
+                    <th scope="row">{{ item.id }}</th>
                     <td scope="row">{{ item.des  }}</td>
                     <td scope="row">{{ item.des2  }}</td>
                     <td scope="row">{{ item.gru  }}</td>
@@ -120,35 +115,31 @@ export default {
   },
   methods: {
     limpar(){
-        this.id = null
+        this.item.id = null
         this.item.des = null
         this.item.des2 = null
         this.item.gru = null
         this.item.un = null
-        this.item.selected=false
+        this.myItems.map(obj => {
+            obj.selected = false
+        })
     },
     goBack(){
           this.$router.go(-1)
     },
-    showModal(){
-        this.isModalVisible=true
-        console.log(this.isModalVisible)
-    },
-    showEditModal(mode='edit'){
+    showModal(mode='save'){
+        this.limpar()
         this.isModalVisible=true
         this.mode=mode
-        console.log(this.isModalVisible)
+    },
+    showEditModal(mode='edit'){
+            this.isModalVisible=true
+            this.mode=mode
     },
     closeModal(){
         this.isModalVisible=false
         this.limpar()
-        console.log(this.isModalVisible)
     },
-    // loadItem(){
-    //     this.$http('mpalmo.json').then(res => {
-    //         this.myItems = res.data
-    //     })
-    //     console.log(this.myItems)
     loadItem(id){
     this.id=id
     this.$http('mpalmo.json').then(res => {
@@ -160,27 +151,40 @@ export default {
         })
     })
     },
+    refreshPage(){
+        this.loadItem()
+        this.limpar()
+    },
     saveItem(){
-        const metodo = this.id ? 'put' : 'post'
-        const finalUrl = this.id ? `/${this.id}.json` : '.json'
-        this.$http[metodo](`/mpalmo${finalUrl}`, this.item)
+        this.$http.post('mpalmo.json',this.item)
             .then(() => {
                 this.limpar()
                 this.loadItem()
                 this.closeModal()
             })
     },
-    selectItem(id, mode='edit'){
-        this.id = id
+    editItem(){
+        const finalUrl = `/${this.item.id}.json`
+        this.$http.put(`/mpalmo${finalUrl}`, this.item)
+            .then(() => {
+                this.limpar()
+                this.loadItem()
+                this.closeModal()
+            })
+        console.log(`/mpalmo${finalUrl}`, this.item.id)
+    },
+    selectItem(id,mode='edit'){
+        this.myItems.map(obj => {
+            obj.selected = false
+        })
         this.item = { ...this.myItems[id] }
+        this.id = id
         this.myItems[id].selected = !this.myItems[id].selected
         this.mode = mode
-        
     },
     deleteItem(){
-        const metodo = 'delete'
-        const finalUrl = `/${this.id}.json`
-        this.$http[metodo](`/mpalmo${finalUrl}`)
+        const finalUrl = `/${this.item.id}.json`
+        this.$http.delete(`/mpalmo${finalUrl}`)
             .then(() => {
                 this.limpar()
                 this.loadItem()

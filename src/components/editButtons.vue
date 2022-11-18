@@ -32,7 +32,7 @@ export default {
             this.$emit("openMyModal2")
         },
         refreshItem(){
-            window.location.reload()
+            this.$emit("reloadPage")
         }
     }
 }
