@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!-- <loading-vue /> -->
     <SidebarVue />
     <!-- <HeaderVue /> -->
     <div id="content">
@@ -28,10 +29,11 @@
                         <li id="clean">Limpar Notificações</li>
                     </ul>
                 </label>
+
             </div>
         </nav>
         <div id="content-view">
-            <transition name="mySlide" mode="out-in">
+                <transition name="mySlide" mode="out-in">
                 <!-- <modal-vue v-if="isModalVisible" @closeMd="closeModal()"></modal-vue> -->
                 <router-view />
             </transition>
@@ -57,6 +59,7 @@
 import { mapState } from 'vuex'
 import SidebarVue from '../components/Sidebar.vue'
 // import ModalVue from '../components/ModalVue.vue'
+// import LoadingVue from '../components/LoadingVue.vue'
 
 export default {
     name: 'HomeView',

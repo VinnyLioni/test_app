@@ -1,24 +1,24 @@
 <template>
   <div id="app">
+    <loading-vue v-if="isLoading"/>
     <home-view/>
   </div>
 </template>
 
 <script>
 import HomeView from '@/views/HomeView.vue'
+import LoadingVue from '@/components/LoadingVue.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'App',
-  components: { HomeView },
-  methods: {
+  components: { HomeView, LoadingVue },
+  data(){
+    return {
 
+    }
   },
-  created(){
-    // this.$http.post('asusu.json', {
-    //   nome: 'Vinicius',
-    //   email: 'vinnylioni@gmail.com'
-    // }).then(res => console.log(res))
-  }
+  computed: mapState(['isLoading'])
 }
 </script>
 
@@ -28,6 +28,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  display: flex;
   color: #2c3e50;
 }
 

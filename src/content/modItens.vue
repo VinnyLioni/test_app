@@ -93,7 +93,7 @@ import { mapState } from 'vuex'
 export default {
   name: "modItens",
   components: { headerItens,ModalVue,editVue },
-  computed: mapState(['IsItemSelected']),
+  computed: mapState(['isLoading']),
   data(){
     return {
         isModalVisible: false,
@@ -125,30 +125,38 @@ export default {
         })
     },
     goBack(){
-          this.$router.go(-1)
+        this.$router.go(-1)
+        this.loadItem()
     },
     showModal(mode='save'){
         this.limpar()
         this.isModalVisible=true
-        this.mode=mode
+            this.loadItem()
+        this.mode=mode.then(() => {
+        })
     },
     showEditModal(mode='edit'){
-            this.isModalVisible=true
-            this.mode=mode
+        this.isModalVisible=true
+        this.mode=mode
+        this.loadItem()
     },
     closeModal(){
         this.isModalVisible=false
         this.limpar()
+        this.loadItem()
     },
     loadItem(id){
+    this.$store.commit('setLoading', true)
     this.id=id
     this.$http('mpalmo.json').then(res => {
+        this.$store.commit('setLoading', false)
         const obj = Object.keys(res.data).map(key => {
             return {id: key, ...res.data[key]}
         })
         this.myItems = obj.map(obj => {
             return { ...obj, selected: false }
         })
+    
     })
     },
     refreshPage(){
@@ -156,11 +164,13 @@ export default {
         this.limpar()
     },
     saveItem(){
+        this.$store.commit('setLoading', true)
         this.$http.post('mpalmo.json',this.item)
             .then(() => {
                 this.limpar()
                 this.loadItem()
                 this.closeModal()
+                this.$store.commit('setLoading', false)
             })
     },
     editItem(){

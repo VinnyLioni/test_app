@@ -8,7 +8,7 @@ export default new Vuex.Store({
     isMenuVisible: false,
     // isModuleSelected: false,
     IsModalVisible: false,
-    IsItemSelected: false,
+    isLoading: false,
   },
   getters: {},
   mutations: {
@@ -36,22 +36,10 @@ export default new Vuex.Store({
       }
       console.log("toggleModal = " + state.IsItemSelected);
     },
-    // selectItem(state, isSelected) {
-    //   if (isSelected === undefined) {
-    //     state.IsSelected = !state.IsSelected;
-    //   } else {
-    //     state.IsSelected = isSelected;
-    //   }
-    //   console.log("selectItem = " + state.IsSelected);
-    // },
-    // selectModule(state, isSelected) {
-    //   if (isSelected === undefined) {
-    //     state.isModuleSelected = !state.isModuleSelected;
-    //   } else {
-    //     state.isModuleSelected = isSelected;
-    //   }
-    //   console.log("selectModule = " + state.isModuleSelected);
-    // },
+    setLoading(state, payload) {
+      state.isLoading = payload;
+      console.log(state.isLoading, "lucas gay");
+    },
   },
   actions: {},
   modules: {},
