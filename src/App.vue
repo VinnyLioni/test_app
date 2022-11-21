@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <loading-vue v-if="isLoading"/>
+    <my-toasted v-if="isFinished"/>
     <home-view/>
   </div>
 </template>
@@ -8,17 +9,19 @@
 <script>
 import HomeView from '@/views/HomeView.vue'
 import LoadingVue from '@/components/LoadingVue.vue'
+import myToasted from '@/components/toastedVue.vue'
+
 import { mapState } from 'vuex'
 
 export default {
   name: 'App',
-  components: { HomeView, LoadingVue },
+  components: { HomeView, LoadingVue, myToasted },
   data(){
     return {
 
     }
   },
-  computed: mapState(['isLoading'])
+  computed: mapState(['isLoading', 'isFinished'])
 }
 </script>
 

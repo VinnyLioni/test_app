@@ -50,7 +50,7 @@
             </main>
             <footer slot="footer">
                 <div class="footer-modal">
-                    <button id="save-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-trash-can"></i> Excluir</button>
+                    <button id="erase-itens"  @click="deleteItem" v-if="mode==='edit'"><i class="fas fa-trash-can"></i> Excluir</button>
                     <button id="save-itens"  @click="editItem" v-if="mode==='edit'"><i class="fas fa-upload ml-2"></i> Atualizar</button>
                     <button id="save-itens"  @click="saveItem" v-if="mode==='save'"><i class="fas fa-upload"></i> Salvar</button>
                 </div>
@@ -126,29 +126,30 @@ export default {
     },
     goBack(){
         this.$router.go(-1)
-        this.loadItem()
     },
     showModal(mode='save'){
         this.limpar()
         this.isModalVisible=true
-            this.loadItem()
-        this.mode=mode.then(() => {
-        })
+        this.mode=mode
+        console.log(this.mode)
     },
     showEditModal(mode='edit'){
         this.isModalVisible=true
         this.mode=mode
-        this.loadItem()
     },
     closeModal(){
         this.isModalVisible=false
         this.limpar()
-        this.loadItem()
     },
     loadItem(id){
     this.$store.commit('setLoading', true)
     this.id=id
     this.$http('mpalmo.json').then(res => {
+        this.$bvToast.toast(`Lista Carregada!`, {
+            title: `Aviso:`,
+            autoHideDelay: 200,
+            variant: 'primary'
+        })
         this.$store.commit('setLoading', false)
         const obj = Object.keys(res.data).map(key => {
             return {id: key, ...res.data[key]}
@@ -167,6 +168,11 @@ export default {
         this.$store.commit('setLoading', true)
         this.$http.post('mpalmo.json',this.item)
             .then(() => {
+                this.$bvToast.toast(`Item salvo com sucesso!!`, {
+                    title: `Aviso:`,
+                    autoHideDelay: 2000,
+                    variant: 'success'
+                })
                 this.limpar()
                 this.loadItem()
                 this.closeModal()
@@ -193,12 +199,20 @@ export default {
         this.mode = mode
     },
     deleteItem(){
+        const oldDes = this.item.des
         const finalUrl = `/${this.item.id}.json`
         this.$http.delete(`/mpalmo${finalUrl}`)
             .then(() => {
+                this.$bvToast.toast(`Item "${oldDes}" excluido com sucesso!!`,{
+                    variant: 'danger',
+                    autoHideDelay: 1000,
+                    title: `Aviso:`
+                        } 
+                    )
                 this.limpar()
                 this.loadItem()
                 this.closeModal()
+                this.oldDes = ''
             })
             console.log(`/mpalmo${finalUrl}`)
     }
@@ -341,6 +355,20 @@ export default {
         background-color: #1ab486;
         transition: .2s;
         color: #ffffff;
+    }
+
+    #erase-itens {
+        color: #bb4444;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 2px;
+        transition: .2s,
+    }
+
+    #erase-itens:hover {
+        background-color: #bb4444;
+        color: #ffffff;
+        transition: .2s
     }
 
     #search-box span {

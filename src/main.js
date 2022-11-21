@@ -10,8 +10,15 @@ import "./assets/tailwind.css";
 import "./plugins/axios";
 import "./plugins/transitionsMk.css";
 import "./css/table.css";
+import Toasted from 'vue-toasted'
 
 Vue.config.productionTip = false;
+
+Vue.use(Toasted, {
+  theme: 'outline',
+  position: 'top-right',
+  duration: 1500
+})
 
 new Vue({
   router,
